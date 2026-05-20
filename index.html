@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shree Mithila Community Organization (SMCO) — Sarlahi, Nepal</title>
+    <meta name="description" content="Shree Mithila Community Organization (SMCO) — Empowering underserved communities in Chakraghatta, Sarlahi, Nepal through education, healthcare, nutrition, and sustainable development since 2022.">
+    <link rel="icon" type="image/png" href="images/Gemini_Generated_Image_vpu0e1vpu0e1vpu0.png">
+    <link rel="apple-touch-icon" href="images/Gemini_Generated_Image_vpu0e1vpu0e1vpu0.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        /* ====================================================
+           DESIGN TOKENS — Extracted from banner.png
+           Crimson Red + Gold + Saffron
+        ==================================================== */
+        :root {
+            --crimson:       #B71C1C;
+            --crimson-dark:  #7F0000;
+            --crimson-light: #E53935;
+            --gold:          #C8960C;
+            --gold-light:    #FFD54F;
+            --gold-pale:     #FFF8E1;
+            --saffron:       #E65100;
+            --white:         #FFFFFF;
+            --off-white:     #FFF9F5;
+            --gray-light:    #F7F4F0;
+            --gray:          #78716C;
+            --dark:          #1A1209;
+            --text:          #2D2416;
+            --shadow-red:    0 6px 30px rgba(183,28,28,0.18);
+            --shadow-gold:   0 6px 30px rgba(200,150,12,0.3);
+            --shadow-soft:   0 4px 24px rgba(0,0,0,0.08);
+            --radius-sm:     8px;
+            --radius:        14px;
+            --radius-lg:     24px;
+            --transition:    all 0.32s cubic-bezier(0.4,0,0.2,1);
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior:smooth; }
+        body {
+            font-family:'Poppins', sans-serif;
+            color:var(--text);
+            background:var(--white);
+            overflow-x:hidden;
+            -webkit-font-smoothing:antialiased;
+        }
+
+        /* ====================================================
+           NAVBAR
+        ==================================================== */
+        .navbar {
+            position:fixed;
+            top:0; left:0; right:0;
+            z-index:1000;
+            background:rgba(255,255,255,0.97);
+            backdrop-filter:blur(16px);
+            -webkit-backdrop-filter:blur(16px);
+            border-bottom:3px solid var(--gold);
+            transition:var(--transition);
+        }
+        .navbar.scrolled { box-shadow:0 2px 40px rgba(0,0,0,0.13); }
+
+        .nav-inner {
+            max-width:1240px; margin:0 auto;
+            padding:0 24px;
+            display:flex; align-items:center; justify-content:space-between;
+            height:74px;
+        }
+
+        .nav-brand {
+            display:flex; align-items:center; gap:13px;
+            text-decoration:none; flex-shrink:0;
+        }
+        .nav-logo { width:54px; height:54px; object-fit:contain; }
+        .nav-title-wrap { display:flex; flex-direction:column; }
+        .nav-title-wrap strong {
+            font-size:0.95rem; font-weight:700;
+            color:var(--crimson); line-height:1.25;
+        }
+        .nav-title-wrap small {
+            font-size:0.67rem; color:var(--gray);
+            letter-spacing:0.5px;
+        }
+        .nav-name-short { display:none; }
+
+        .nav-links {
+            display:flex; align-items:center; gap:6px; list-style:none;
+        }
+        .nav-links a {
+            text-decoration:none; color:var(--dark);
+            font-size:0.87rem; font-weight:500;
+            padding:8px 14px; border-radius:8px;
+            transition:var(--transition);
+        }
+        .nav-links a:hover { color:var(--crimson); background:rgba(183,28,28,0.06); }
+        .nav-cta {
+            background:linear-gradient(135deg, var(--crimson), var(--crimson-light)) !important;
+            color:white !important;
+            padding:10px 22px !important;
+            border-radius:30px !important;
+            font-weight:700 !important;
+            box-shadow:0 4px 16px rgba(183,28,28,0.35);
+        }
+        .nav-cta:hover {
+            transform:translateY(-2px);
+            box-shadow:0 8px 24px rgba(183,28,28,0.45) !important;
+            background:var(--crimson-dark) !important;
+            color:white !important;
+        }
+
+        .hamburger {
+            display:none; flex-direction:column;
+            cursor:pointer; gap:5px; padding:4px;
+        }
+        .hamburger span {
+            display:block; width:26px; height:2.5px;
+            background:var(--crimson); border-radius:2px;
+            transition:var(--transition);
+        }
+
+        /* ====================================================
+           MOBILE MENU
+        ==================================================== */
+        .mobile-menu {
+            display:none;
+            position:fixed; inset:0;
+            background:rgba(10,5,2,0.97);
+            z-index:1100;
+            flex-direction:column; align-items:center; justify-content:center;
+            gap:32px;
+        }
+        .mobile-menu.open { display:flex; }
+        .mobile-close {
+            position:absolute; top:24px; right:24px;
+            background:none; border:none;
+            color:rgba(255,255,255,0.7); font-size:2rem; cursor:pointer;
+        }
+        .mobile-menu a {
+            color:rgba(255,255,255,0.85); text-decoration:none;
+            font-size:1.35rem; font-weight:600; transition:var(--transition);
+        }
+        .mobile-menu a:hover { color:var(--gold-light); }
+
+        /* ====================================================
+           HERO
+        ==================================================== */
+        .hero {
+            position:relative; min-height:100vh;
+            display:flex; align-items:center; overflow:hidden;
+        }
+        .hero-bg {
+            position:absolute; inset:0;
+            background:url('images/banner.png') center/cover no-repeat;
+            filter:brightness(0.28) saturate(1.1);
+            transform:scale(1.04);
+        }
+        .hero-gradient {
+            position:absolute; inset:0;
+            background:linear-gradient(
+                140deg,
+                rgba(100,0,0,0.82) 0%,
+                rgba(183,28,28,0.65) 45%,
+                rgba(200,150,12,0.45) 100%
+            );
+        }
+        .hero-pattern {
+            position:absolute; inset:0;
+            background-image:
+                radial-gradient(circle at 20% 50%, rgba(200,150,12,0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(183,28,28,0.12) 0%, transparent 40%);
+            pointer-events:none;
+        }
+
+        .hero-content {
+            position:relative; z-index:2;
+            max-width:1240px; margin:0 auto;
+            padding:130px 24px 100px;
+            display:flex; flex-direction:column; align-items:center; text-align:center;
+        }
+
+        .hero-eyebrow {
+            display:inline-flex; align-items:center; gap:10px;
+            background:rgba(200,150,12,0.18);
+            border:1px solid rgba(255,213,79,0.45);
+            color:var(--gold-light);
+            padding:9px 22px; border-radius:40px;
+            font-size:0.78rem; font-weight:600;
+            letter-spacing:2px; text-transform:uppercase;
+            margin-bottom:28px;
+            animation:fadeDown 0.7s ease both;
+        }
+        .hero-eyebrow i { font-size:0.75rem; }
+
+        .hero-logo {
+            width:130px; height:130px; object-fit:contain;
+            filter:drop-shadow(0 6px 28px rgba(200,150,12,0.55));
+            margin-bottom:26px;
+            animation:fadeDown 0.7s ease 0.1s both;
+        }
+
+        .hero-title {
+            font-family:'Playfair Display', serif;
+            font-size:clamp(2.4rem,5.5vw,4.2rem);
+            font-weight:700; color:white; line-height:1.15;
+            margin-bottom:8px;
+            animation:fadeUp 0.8s ease 0.2s both;
+        }
+        .hero-title em { font-style:normal; color:var(--gold-light); }
+
+        .hero-nepali {
+            font-size:clamp(1.1rem,2.5vw,1.6rem);
+            color:rgba(255,213,79,0.88); font-weight:500;
+            margin-bottom:22px; letter-spacing:1px;
+            animation:fadeUp 0.8s ease 0.3s both;
+        }
+
+        .hero-desc {
+            font-size:clamp(0.95rem,1.5vw,1.12rem);
+            color:rgba(255,255,255,0.82);
+            max-width:660px; line-height:1.85;
+            margin-bottom:44px;
+            animation:fadeUp 0.8s ease 0.4s both;
+        }
+
+        .hero-actions {
+            display:flex; gap:16px; flex-wrap:wrap; justify-content:center;
+            animation:fadeUp 0.8s ease 0.5s both;
+        }
+        .btn-gold {
+            background:linear-gradient(135deg, var(--gold), #E6A820);
+            color:var(--dark); padding:15px 34px; border-radius:40px;
+            text-decoration:none; font-weight:700; font-size:0.95rem;
+            transition:var(--transition);
+            box-shadow:0 6px 24px rgba(200,150,12,0.5);
+            display:inline-flex; align-items:center; gap:8px;
+        }
+        .btn-gold:hover {
+            transform:translateY(-3px);
+            box-shadow:0 10px 32px rgba(200,150,12,0.65);
+        }
+        .btn-ghost {
+            border:2px solid rgba(255,255,255,0.65);
+            color:white; padding:15px 34px; border-radius:40px;
+            text-decoration:none; font-weight:600; font-size:0.95rem;
+            transition:var(--transition);
+            backdrop-filter:blur(6px);
+            display:inline-flex; align-items:center; gap:8px;
+        }
+        .btn-ghost:hover {
+            background:rgba(255,255,255,0.14); border-color:white;
+            transform:translateY(-3px);
+        }
+
+        .hero-scroll {
+            position:absolute; bottom:32px; left:50%;
+            transform:translateX(-50%);
+            display:flex; flex-direction:column; align-items:center; gap:8px;
+            color:rgba(255,255,255,0.5); font-size:0.7rem;
+            text-transform:uppercase; letter-spacing:2px;
+            animation:bob 2s ease-in-out infinite;
+        }
+        .hero-scroll i { font-size:1.1rem; }
+
+        /* ====================================================
+           IMPACT STATS
+        ==================================================== */
+        .stats-band {
+            background:linear-gradient(135deg, var(--crimson-dark) 0%, var(--crimson) 60%, #D32F2F 100%);
+            padding:55px 24px;
+            position:relative; overflow:hidden;
+        }
+        .stats-band::before {
+            content:'';
+            position:absolute; inset:0;
+            background:radial-gradient(circle at 70% 50%, rgba(200,150,12,0.12) 0%, transparent 60%);
+            pointer-events:none;
+        }
+        .stats-band::after {
+            content:'';
+            position:absolute; bottom:0; left:0; right:0;
+            height:4px;
+            background:linear-gradient(90deg, transparent, var(--gold), var(--gold-light), var(--gold), transparent);
+        }
+        .stats-inner {
+            max-width:1100px; margin:0 auto;
+            display:grid; grid-template-columns:repeat(4,1fr); gap:20px;
+            position:relative; z-index:1;
+        }
+        .stat-card {
+            text-align:center; padding:10px 8px;
+            border-right:1px solid rgba(255,255,255,0.12);
+        }
+        .stat-card:last-child { border-right:none; }
+        .stat-card .icon {
+            font-size:1.9rem; color:var(--gold-light); margin-bottom:10px;
+        }
+        .stat-card .number {
+            font-family:'Playfair Display',serif;
+            font-size:2.9rem; font-weight:700; color:white; line-height:1;
+        }
+        .stat-card .number em { font-style:normal; color:var(--gold-light); }
+        .stat-card .label {
+            font-size:0.78rem; color:rgba(255,255,255,0.68);
+            text-transform:uppercase; letter-spacing:1.2px; margin-top:7px;
+        }
+
+        /* ====================================================
+           SHARED SECTION STYLES
+        ==================================================== */
+        section { padding:96px 24px; }
+        .container { max-width:1240px; margin:0 auto; }
+
+        .tag {
+            display:inline-block;
+            background:rgba(183,28,28,0.09); color:var(--crimson);
+            padding:6px 18px; border-radius:30px;
+            font-size:0.75rem; font-weight:700;
+            text-transform:uppercase; letter-spacing:2px;
+            margin-bottom:14px;
+        }
+        .tag-gold {
+            background:rgba(200,150,12,0.15) !important;
+            color:var(--gold-light) !important;
+        }
+
+        .section-heading {
+            font-family:'Playfair Display', serif;
+            font-size:clamp(1.9rem,3.8vw,3rem);
+            font-weight:700; color:var(--dark); line-height:1.22;
+            margin-bottom:14px;
+        }
+        .section-heading em { font-style:normal; color:var(--crimson); }
+
+        .divider-line {
+            width:58px; height:4px;
+            background:linear-gradient(90deg, var(--crimson), var(--gold));
+            border-radius:2px; margin:16px 0 22px;
+        }
+        .divider-line.center { margin-left:auto; margin-right:auto; }
+
+        .lead-text {
+            font-size:1rem; color:var(--gray);
+            max-width:600px; line-height:1.8;
+        }
+
+        /* ====================================================
+           ABOUT
+        ==================================================== */
+        .about-section { background:var(--off-white); }
+        .about-grid {
+            display:grid; grid-template-columns:1fr 1fr;
+            gap:72px; align-items:center;
+        }
+
+        .about-img-block { position:relative; }
+        .about-img-main {
+            width:100%; height:460px; object-fit:cover;
+            border-radius:var(--radius);
+            box-shadow:var(--shadow-red);
+        }
+        .about-img-accent {
+            position:absolute; bottom:-22px; right:-22px;
+            background:white; border-radius:var(--radius);
+            padding:18px 22px;
+            box-shadow:0 8px 32px rgba(0,0,0,0.13);
+            border-left:4px solid var(--gold);
+        }
+        .about-img-accent strong {
+            display:block; font-size:1.8rem; color:var(--crimson); font-weight:800;
+            font-family:'Playfair Display',serif;
+        }
+        .about-img-accent span { font-size:0.78rem; color:var(--gray); }
+
+        .org-table {
+            background:white; border-radius:var(--radius);
+            overflow:hidden; box-shadow:var(--shadow-soft);
+            margin-top:26px; border:1px solid rgba(183,28,28,0.08);
+        }
+        .org-row {
+            display:grid; grid-template-columns:110px 1fr;
+            border-bottom:1px solid rgba(0,0,0,0.05);
+            padding:13px 20px; align-items:start; gap:12px;
+        }
+        .org-row:last-child { border-bottom:none; }
+        .org-key {
+            font-size:0.75rem; font-weight:700; color:var(--crimson);
+            text-transform:uppercase; letter-spacing:0.8px; padding-top:1px;
+        }
+        .org-val { font-size:0.9rem; color:var(--text); line-height:1.65; }
+
+        /* ====================================================
+           VISION & MISSION
+        ==================================================== */
+        .vm-section { background:white; }
+        .vm-grid {
+            display:grid; grid-template-columns:1fr 1fr;
+            gap:28px; margin-top:52px;
+        }
+        .vm-card {
+            background:var(--off-white); border-radius:var(--radius-lg);
+            padding:44px 38px; position:relative; overflow:hidden;
+            transition:var(--transition);
+        }
+        .vm-card::before {
+            content:'';
+            position:absolute; top:0; left:0; right:0;
+            height:4px;
+            background:linear-gradient(90deg, var(--crimson), var(--gold));
+        }
+        .vm-card::after {
+            content:'';
+            position:absolute; bottom:-40px; right:-40px;
+            width:130px; height:130px;
+            background:radial-gradient(circle, rgba(183,28,28,0.06) 0%, transparent 70%);
+            border-radius:50%;
+        }
+        .vm-card:hover { transform:translateY(-6px); box-shadow:var(--shadow-red); }
+
+        .vm-icon-box {
+            width:64px; height:64px;
+            background:linear-gradient(135deg, var(--crimson), var(--crimson-light));
+            border-radius:18px;
+            display:flex; align-items:center; justify-content:center;
+            margin-bottom:22px;
+            box-shadow:0 6px 18px rgba(183,28,28,0.35);
+        }
+        .vm-icon-box i { font-size:1.6rem; color:white; }
+        .vm-card h3 {
+            font-family:'Playfair Display',serif;
+            font-size:1.55rem; font-weight:700; color:var(--dark); margin-bottom:14px;
+        }
+        .vm-card p { color:var(--gray); line-height:1.85; font-size:0.95rem; }
+
+        /* ====================================================
+           PROGRAMS
+        ==================================================== */
+        .programs-section {
+            background:linear-gradient(180deg, var(--white) 0%, var(--gray-light) 100%);
+        }
+        .programs-grid {
+            display:grid; grid-template-columns:repeat(3,1fr);
+            gap:24px; margin-top:52px;
+        }
+        .prog-card {
+            background:white; border-radius:var(--radius);
+            padding:38px 28px; text-align:center;
+            box-shadow:var(--shadow-soft);
+            transition:var(--transition);
+            border-bottom:3px solid transparent;
+            position:relative; overflow:hidden;
+        }
+        .prog-card::before {
+            content:'';
+            position:absolute; top:0; left:0; right:0; bottom:0;
+            background:linear-gradient(135deg, rgba(183,28,28,0.025), rgba(200,150,12,0.04));
+            opacity:0; transition:var(--transition);
+        }
+        .prog-card:hover::before { opacity:1; }
+        .prog-card:hover {
+            transform:translateY(-8px);
+            box-shadow:var(--shadow-red);
+            border-bottom-color:var(--gold);
+        }
+
+        .prog-icon {
+            width:78px; height:78px; margin:0 auto 22px;
+            background:linear-gradient(135deg, rgba(183,28,28,0.09), rgba(200,150,12,0.09));
+            border-radius:22px;
+            display:flex; align-items:center; justify-content:center;
+            transition:var(--transition);
+        }
+        .prog-card:hover .prog-icon {
+            background:linear-gradient(135deg, var(--crimson), var(--saffron));
+            box-shadow:0 6px 20px rgba(183,28,28,0.35);
+        }
+        .prog-icon i { font-size:1.9rem; color:var(--crimson); transition:var(--transition); }
+        .prog-card:hover .prog-icon i { color:white; }
+
+        .prog-card h3 {
+            font-size:1.05rem; font-weight:700;
+            color:var(--dark); margin-bottom:12px;
+        }
+        .prog-card p { font-size:0.87rem; color:var(--gray); line-height:1.75; }
+
+        /* ====================================================
+           GALLERY
+        ==================================================== */
+        .gallery-section {
+            background:var(--dark); padding:96px 24px;
+        }
+        .gallery-section .section-heading { color:white; }
+        .gallery-section .lead-text { color:rgba(255,255,255,0.55); }
+        .gallery-section .divider-line { background:linear-gradient(90deg, var(--gold), var(--gold-light)); }
+
+        .gallery-mosaic {
+            display:grid;
+            grid-template-columns:repeat(4,1fr);
+            grid-template-rows:260px 260px;
+            gap:12px; margin-top:40px;
+        }
+        .gal-item {
+            overflow:hidden; border-radius:10px;
+            position:relative; cursor:pointer;
+        }
+        .gal-item:nth-child(1) { grid-column:span 2; grid-row:span 2; }
+        .gal-item img {
+            width:100%; height:100%; object-fit:cover;
+            transition:transform 0.6s cubic-bezier(0.4,0,0.2,1);
+        }
+        .gal-item:hover img { transform:scale(1.1); }
+        .gal-caption {
+            position:absolute; inset:0;
+            background:linear-gradient(to top, rgba(127,0,0,0.75) 0%, transparent 55%);
+            opacity:0; transition:var(--transition);
+            display:flex; align-items:flex-end; padding:16px;
+        }
+        .gal-item:hover .gal-caption { opacity:1; }
+        .gal-caption span {
+            color:white; font-size:0.83rem; font-weight:500; line-height:1.4;
+        }
+
+        /* ====================================================
+           CTA BAND
+        ==================================================== */
+        .cta-band {
+            background:linear-gradient(140deg, var(--crimson-dark), var(--crimson) 55%, #D32F2F);
+            padding:96px 24px; text-align:center;
+            position:relative; overflow:hidden;
+        }
+        .cta-band::before {
+            content:'';
+            position:absolute; top:-60%; left:-15%;
+            width:55%; height:220%;
+            background:rgba(200,150,12,0.07);
+            border-radius:50%; pointer-events:none;
+        }
+        .cta-band::after {
+            content:'';
+            position:absolute; bottom:-70%; right:-10%;
+            width:55%; height:220%;
+            background:rgba(200,150,12,0.05);
+            border-radius:50%; pointer-events:none;
+        }
+        .cta-inner { position:relative; z-index:1; }
+        .cta-band h2 {
+            font-family:'Playfair Display',serif;
+            font-size:clamp(2rem,4.5vw,3.2rem); color:white; margin-bottom:18px;
+        }
+        .cta-band h2 em { font-style:normal; color:var(--gold-light); }
+        .cta-band p {
+            color:rgba(255,255,255,0.78); font-size:1.05rem;
+            max-width:550px; margin:0 auto 40px; line-height:1.8;
+        }
+        .cta-actions { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
+        .btn-gold-solid {
+            background:linear-gradient(135deg, var(--gold), #E6A820);
+            color:var(--dark); padding:16px 38px; border-radius:40px;
+            text-decoration:none; font-weight:700; font-size:1rem;
+            transition:var(--transition);
+            box-shadow:0 6px 24px rgba(200,150,12,0.55);
+            display:inline-flex; align-items:center; gap:9px;
+        }
+        .btn-gold-solid:hover {
+            transform:translateY(-3px);
+            box-shadow:0 12px 36px rgba(200,150,12,0.7);
+        }
+        .btn-white-solid {
+            background:white; color:var(--crimson);
+            padding:16px 38px; border-radius:40px;
+            text-decoration:none; font-weight:700; font-size:1rem;
+            transition:var(--transition);
+            display:inline-flex; align-items:center; gap:9px;
+        }
+        .btn-white-solid:hover {
+            transform:translateY(-3px);
+            box-shadow:0 10px 28px rgba(0,0,0,0.18);
+        }
+
+        /* ====================================================
+           CONTACT
+        ==================================================== */
+        .contact-section { background:var(--off-white); }
+        .contact-grid {
+            display:grid; grid-template-columns:1fr 1.6fr;
+            gap:64px; margin-top:52px;
+        }
+
+        .cinfo-item {
+            display:flex; gap:16px; align-items:flex-start; margin-bottom:30px;
+        }
+        .cinfo-icon {
+            width:50px; height:50px; flex-shrink:0;
+            background:linear-gradient(135deg, var(--crimson), var(--crimson-light));
+            border-radius:14px;
+            display:flex; align-items:center; justify-content:center;
+            box-shadow:0 4px 16px rgba(183,28,28,0.3);
+        }
+        .cinfo-icon i { color:white; font-size:1.1rem; }
+        .cinfo-text h4 {
+            font-size:0.75rem; color:var(--gray);
+            text-transform:uppercase; letter-spacing:1.2px; margin-bottom:5px;
+        }
+        .cinfo-text p { font-size:0.92rem; color:var(--text); line-height:1.6; }
+
+        .contact-form-card {
+            background:white; border-radius:var(--radius-lg);
+            padding:44px 40px;
+            box-shadow:var(--shadow-soft);
+        }
+        .contact-form-card h3 {
+            font-family:'Playfair Display',serif;
+            font-size:1.4rem; color:var(--dark); margin-bottom:28px;
+        }
+        .form-duo { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+        .fgroup { margin-bottom:20px; }
+        .fgroup label {
+            display:block; font-size:0.82rem; font-weight:600;
+            color:var(--dark); margin-bottom:8px;
+        }
+        .fgroup input, .fgroup textarea {
+            width:100%; padding:12px 16px;
+            border:2px solid #EDE8E0; border-radius:10px;
+            font-family:'Poppins',sans-serif; font-size:0.9rem;
+            color:var(--text); background:var(--off-white);
+            transition:var(--transition);
+        }
+        .fgroup input:focus, .fgroup textarea:focus {
+            outline:none; border-color:var(--crimson);
+            background:white; box-shadow:0 0 0 3px rgba(183,28,28,0.08);
+        }
+        .fgroup textarea { height:118px; resize:vertical; }
+        .btn-submit {
+            width:100%; padding:14px;
+            background:linear-gradient(135deg, var(--crimson), var(--crimson-light));
+            color:white; border:none; border-radius:40px;
+            font-family:'Poppins',sans-serif; font-size:0.95rem; font-weight:700;
+            cursor:pointer; transition:var(--transition);
+            box-shadow:var(--shadow-red);
+            display:flex; align-items:center; justify-content:center; gap:9px;
+        }
+        .btn-submit:hover {
+            transform:translateY(-2px);
+            box-shadow:0 10px 28px rgba(183,28,28,0.45);
+        }
+
+        /* ====================================================
+           FOOTER
+        ==================================================== */
+        .footer { background:#100A03; padding:72px 24px 0; }
+        .footer-grid {
+            max-width:1240px; margin:0 auto;
+            display:grid; grid-template-columns:2fr 1fr 1fr 1fr;
+            gap:52px; padding-bottom:52px;
+        }
+
+        .footer-brand-wrap { display:flex; align-items:center; gap:12px; margin-bottom:18px; }
+        .footer-logo { width:52px; height:52px; object-fit:contain; }
+        .footer-org strong { display:block; color:white; font-size:0.95rem; font-weight:700; line-height:1.3; }
+        .footer-org small { color:var(--gold-light); font-size:0.72rem; letter-spacing:2px; }
+
+        .footer-tagline {
+            font-size:0.87rem; color:rgba(255,255,255,0.55);
+            line-height:1.8; margin-bottom:24px;
+        }
+        .socials { display:flex; gap:10px; }
+        .social-btn {
+            width:38px; height:38px; border-radius:10px;
+            background:rgba(255,255,255,0.07);
+            display:flex; align-items:center; justify-content:center;
+            color:rgba(255,255,255,0.6); text-decoration:none;
+            font-size:0.9rem; transition:var(--transition);
+        }
+        .social-btn:hover { background:var(--crimson); color:white; transform:translateY(-3px); }
+
+        .footer-col h5 {
+            color:white; font-size:0.9rem; font-weight:600;
+            margin-bottom:20px; padding-bottom:10px;
+            border-bottom:2px solid rgba(200,150,12,0.4);
+        }
+        .footer-col ul { list-style:none; }
+        .footer-col ul li { margin-bottom:9px; }
+        .footer-col ul li a {
+            color:rgba(255,255,255,0.55); text-decoration:none;
+            font-size:0.87rem; transition:var(--transition);
+            display:flex; align-items:center; gap:7px;
+        }
+        .footer-col ul li a::before { content:'›'; color:var(--gold); font-weight:bold; font-size:1rem; }
+        .footer-col ul li a:hover { color:var(--gold-light); padding-left:4px; }
+
+        .footer-contact-item {
+            display:flex; align-items:flex-start; gap:9px; margin-bottom:12px;
+        }
+        .footer-contact-item i { color:var(--gold); font-size:0.85rem; margin-top:2px; flex-shrink:0; }
+        .footer-contact-item span { color:rgba(255,255,255,0.55); font-size:0.87rem; line-height:1.6; }
+
+        .footer-bar {
+            max-width:1240px; margin:0 auto;
+            border-top:1px solid rgba(255,255,255,0.07);
+            padding:22px 0;
+            display:flex; align-items:center; justify-content:space-between;
+            font-size:0.82rem; color:rgba(255,255,255,0.4);
+            flex-wrap:wrap; gap:10px;
+        }
+        .footer-bar span i { color:var(--crimson); }
+
+        /* ====================================================
+           SCROLL ANIMATIONS
+        ==================================================== */
+        .reveal {
+            opacity:0; transform:translateY(36px);
+            transition:opacity 0.7s ease, transform 0.7s ease;
+        }
+        .reveal.show { opacity:1; transform:translateY(0); }
+
+        /* ====================================================
+           KEYFRAMES
+        ==================================================== */
+        @keyframes fadeDown {
+            from { opacity:0; transform:translateY(-22px); }
+            to   { opacity:1; transform:translateY(0); }
+        }
+        @keyframes fadeUp {
+            from { opacity:0; transform:translateY(28px); }
+            to   { opacity:1; transform:translateY(0); }
+        }
+        @keyframes bob {
+            0%,100% { transform:translateX(-50%) translateY(0); }
+            50%      { transform:translateX(-50%) translateY(-10px); }
+        }
+
+        /* ====================================================
+           RESPONSIVE
+        ==================================================== */
+        @media (max-width:1024px) {
+            .stats-inner { grid-template-columns:repeat(2,1fr); gap:30px; }
+            .stat-card { border-right:none; border-bottom:1px solid rgba(255,255,255,0.1); }
+            .stat-card:nth-child(odd) { border-right:1px solid rgba(255,255,255,0.1); }
+            .stat-card:last-child,.stat-card:nth-last-child(2):nth-child(odd) { border-bottom:none; }
+            .about-grid { grid-template-columns:1fr; gap:44px; }
+            .about-img-main { height:360px; }
+            .footer-grid { grid-template-columns:1fr 1fr; gap:36px; }
+            .gallery-mosaic { grid-template-rows:200px 200px; }
+        }
+        @media (max-width:768px) {
+            .nav-links { display:none; }
+            .hamburger { display:flex; }
+            .nav-name-full { display:none; }
+            .nav-name-short { display:block; }
+            .nav-title-wrap small { display:none; }
+            .vm-grid { grid-template-columns:1fr; }
+            .programs-grid { grid-template-columns:1fr 1fr; }
+            .contact-grid { grid-template-columns:1fr; gap:32px; }
+            .gallery-mosaic {
+                grid-template-columns:1fr 1fr;
+                grid-template-rows:auto;
+            }
+            .gal-item:nth-child(1) { grid-column:span 2; height:260px; }
+            .gal-item:not(:first-child) { height:200px; }
+            .footer-grid { grid-template-columns:1fr; gap:28px; }
+            .footer-bar { flex-direction:column; text-align:center; }
+            .form-duo { grid-template-columns:1fr; }
+            .about-img-accent { bottom:10px; right:10px; }
+        }
+        @media (max-width:480px) {
+            section { padding:70px 18px; }
+            .programs-grid { grid-template-columns:1fr; }
+            .stats-inner { grid-template-columns:1fr 1fr; }
+            .stat-card { border-right:none; border-bottom:1px solid rgba(255,255,255,0.1); }
+            .stat-card:nth-child(odd) { border-right:1px solid rgba(255,255,255,0.1); }
+            .gallery-mosaic { grid-template-columns:1fr; }
+            .gal-item:nth-child(1) { grid-column:span 1; height:240px; }
+            .gal-item:not(:first-child) { height:200px; }
+            .contact-form-card { padding:28px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<nav class="navbar" id="navbar">
+    <div class="nav-inner">
+        <a href="#" class="nav-brand">
+            <img src="images/Gemini_Generated_Image_vpu0e1vpu0e1vpu0.png" alt="SMCO Logo" class="nav-logo">
+            <div class="nav-title-wrap">
+                <strong class="nav-name-full">Shree Mithila Community Organization</strong>
+                <strong class="nav-name-short">SMCO</strong>
+                <small>Chakraghatta, Sarlahi, Nepal</small>
+            </div>
+        </a>
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#vision">Vision</a></li>
+            <li><a href="#programs">Programs</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#contact" class="nav-cta">Donate Now</a></li>
+        </ul>
+        <div class="hamburger" id="hamburger" aria-label="Open menu">
+            <span></span><span></span><span></span>
+        </div>
+    </div>
+</nav>
+
+<!-- ================= MOBILE MENU ================= -->
+<div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true">
+    <button class="mobile-close" id="mobileClose" aria-label="Close menu">&times;</button>
+    <a href="#about"     onclick="closeMobileMenu()">About Us</a>
+    <a href="#vision"    onclick="closeMobileMenu()">Vision &amp; Mission</a>
+    <a href="#programs"  onclick="closeMobileMenu()">Programs</a>
+    <a href="#gallery"   onclick="closeMobileMenu()">Gallery</a>
+    <a href="#contact"   onclick="closeMobileMenu()">Contact</a>
+    <a href="#contact"   onclick="closeMobileMenu()" style="color:var(--gold-light)">&#9829; Donate</a>
+</div>
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="home" aria-label="Hero">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="hero-gradient" aria-hidden="true"></div>
+    <div class="hero-pattern" aria-hidden="true"></div>
+    <div class="hero-content">
+        <div class="hero-eyebrow">
+            <i class="fas fa-map-marker-alt"></i>
+            Established 2022 &nbsp;·&nbsp; Sarlahi, Nepal
+        </div>
+        <img src="images/Gemini_Generated_Image_vpu0e1vpu0e1vpu0.png" alt="SMCO Emblem" class="hero-logo">
+        <h1 class="hero-title">
+            Shree Mithila<br><em>Community Organization</em>
+        </h1>
+        <p class="hero-nepali">श्री मिथिला सामुदायिक संस्था</p>
+        <p class="hero-desc">
+            Empowering underserved communities across Chakraghatta Gaupalika through free healthcare, quality education, digital skills, and sustainable development — because every life deserves dignity.
+        </p>
+        <div class="hero-actions">
+            <a href="#programs" class="btn-gold">
+                <i class="fas fa-hand-holding-heart"></i> Our Programs
+            </a>
+            <a href="#about" class="btn-ghost">
+                <i class="fas fa-info-circle"></i> Learn More
+            </a>
+        </div>
+    </div>
+    <div class="hero-scroll" aria-hidden="true">
+        <span>Scroll</span>
+        <i class="fas fa-chevron-down"></i>
+    </div>
+</section>
+
+<!-- ================= IMPACT STATS ================= -->
+<div class="stats-band" aria-label="Impact statistics">
+    <div class="stats-inner">
+        <div class="stat-card reveal">
+            <div class="icon"><i class="fas fa-users"></i></div>
+            <div class="number"><span class="counter" data-target="500">0</span><em>+</em></div>
+            <div class="label">People Served</div>
+        </div>
+        <div class="stat-card reveal">
+            <div class="icon"><i class="fas fa-heartbeat"></i></div>
+            <div class="number"><span class="counter" data-target="3">0</span><em>+</em></div>
+            <div class="label">Free Health Camps</div>
+        </div>
+        <div class="stat-card reveal">
+            <div class="icon"><i class="fas fa-layer-group"></i></div>
+            <div class="number"><span class="counter" data-target="5">0</span></div>
+            <div class="label">Program Areas</div>
+        </div>
+        <div class="stat-card reveal">
+            <div class="icon"><i class="fas fa-calendar-check"></i></div>
+            <div class="number"><span class="counter" data-target="2022">0</span></div>
+            <div class="label">Year Founded</div>
+        </div>
+    </div>
+</div>
+
+<!-- ================= ABOUT ================= -->
+<section class="about-section" id="about">
+    <div class="container">
+        <div class="about-grid">
+            <div class="about-img-block reveal">
+                <img src="images/banner.png" alt="SMCO Free Health Camp, Chakraghatta Sarlahi" class="about-img-main">
+                <div class="about-img-accent">
+                    <strong>2022</strong>
+                    <span>Year Established</span>
+                </div>
+            </div>
+            <div class="reveal">
+                <div class="tag">Who We Are</div>
+                <h2 class="section-heading">Building Stronger<br><em>Communities</em> Since 2022</h2>
+                <div class="divider-line"></div>
+                <p class="lead-text">
+                    Shree Mithila Community Organization (SMCO) is a grassroots non-profit based in Chakraghatta Gaupalika, Sarlahi, Nepal. We work at the intersection of healthcare, education, and empowerment — bringing services directly to those who need them most.
+                </p>
+                <div class="org-table" style="margin-top:28px;">
+                    <div class="org-row">
+                        <span class="org-key">Founded</span>
+                        <span class="org-val">2022, Chakraghatta Gaupalika, Sarlahi District, Nepal</span>
+                    </div>
+                    <div class="org-row">
+                        <span class="org-key">Focus</span>
+                        <span class="org-val">Education, Healthcare, Nutrition, Sanitation &amp; Empowerment of marginalized populations</span>
+                    </div>
+                    <div class="org-row">
+                        <span class="org-key">Vision</span>
+                        <span class="org-val">Improve quality of life for underserved communities through sustainable interventions and partnerships</span>
+                    </div>
+                    <div class="org-row">
+                        <span class="org-key">Location</span>
+                        <span class="org-val">Chakraghatta-2, Sarlahi, Province No. 2, Nepal</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= VISION & MISSION ================= -->
+<section class="vm-section" id="vision">
+    <div class="container">
+        <div style="text-align:center">
+            <div class="tag">Our Purpose</div>
+            <h2 class="section-heading">Vision &amp; <em>Mission</em></h2>
+            <div class="divider-line center"></div>
+        </div>
+        <div class="vm-grid">
+            <div class="vm-card reveal">
+                <div class="vm-icon-box"><i class="fas fa-eye"></i></div>
+                <h3>Our Vision</h3>
+                <p>A future where every individual in Sarlahi's underserved communities thrives — regardless of socioeconomic background — through sustainable, evidence-based interventions and inclusive partnerships that leave no one behind.</p>
+            </div>
+            <div class="vm-card reveal">
+                <div class="vm-icon-box"><i class="fas fa-bullseye"></i></div>
+                <h3>Our Mission</h3>
+                <p>To deliver accessible healthcare, quality education, digital literacy, proper nutrition, and skill empowerment to marginalized groups in Chakraghatta Gaupalika — fostering dignity, resilience, and long-term self-sufficiency.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= PROGRAMS ================= -->
+<section class="programs-section" id="programs">
+    <div class="container">
+        <div style="text-align:center">
+            <div class="tag">What We Do</div>
+            <h2 class="section-heading">Our Five <em>Program Areas</em></h2>
+            <div class="divider-line center"></div>
+            <p class="lead-text" style="margin:0 auto 0">
+                Five focused pillars that directly impact thousands of lives across Sarlahi every year.
+            </p>
+        </div>
+        <div class="programs-grid">
+            <div class="prog-card reveal">
+                <div class="prog-icon"><i class="fas fa-book-open"></i></div>
+                <h3>Education</h3>
+                <p>Increasing access for underprivileged children through scholarships, tutoring support, and enrollment drives that improve school retention in rural communities.</p>
+            </div>
+            <div class="prog-card reveal">
+                <div class="prog-icon"><i class="fas fa-laptop-code"></i></div>
+                <h3>Digitalization</h3>
+                <p>Empowering rural schools and youth with computer literacy programs — bridging the digital divide and unlocking opportunities for the next generation.</p>
+            </div>
+            <div class="prog-card reveal">
+                <div class="prog-icon"><i class="fas fa-heartbeat"></i></div>
+                <h3>Healthcare &amp; Nutrition</h3>
+                <p>Expanding access through free health camps, awareness drives, maternal care, and targeted programs to combat child malnutrition across the district.</p>
+            </div>
+            <div class="prog-card reveal">
+                <div class="prog-icon"><i class="fas fa-hands-helping"></i></div>
+                <h3>Empowerment</h3>
+                <p>Fostering skill development and economic independence for women and marginalized groups through vocational training and entrepreneurship mentorship.</p>
+            </div>
+            <div class="prog-card reveal">
+                <div class="prog-icon"><i class="fas fa-seedling"></i></div>
+                <h3>Agricultural Modernization</h3>
+                <p>Supporting sustainable farming techniques and modern agricultural practices to improve yields, food security, and livelihoods for rural families.</p>
+            </div>
+            <div class="prog-card reveal" style="border-bottom:3px solid var(--gold)">
+                <div class="prog-icon" style="background:linear-gradient(135deg,rgba(183,28,28,0.1),rgba(200,150,12,0.12))">
+                    <i class="fas fa-tint" style="color:var(--gold)"></i>
+                </div>
+                <h3>Sanitation &amp; Hygiene</h3>
+                <p>Promoting clean water access, sanitation infrastructure, and hygiene education to reduce preventable disease and improve overall community health.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= GALLERY ================= -->
+<section class="gallery-section" id="gallery">
+    <div class="container">
+        <div class="tag tag-gold">Our Activities</div>
+        <h2 class="section-heading">Moments from <em style="color:var(--gold-light)">the Field</em></h2>
+        <div class="divider-line"></div>
+        <p class="lead-text">
+            Real snapshots of SMCO's work — free health camps, community outreach, and programs in action across Sarlahi.
+        </p>
+        <div class="gallery-mosaic">
+            <div class="gal-item reveal">
+                <img src="images/banner.png" alt="SMCO Health Camp Team at Chakraghatta, Sarlahi">
+                <div class="gal-caption"><span>Free Health Camp — Chakraghatta, Sarlahi</span></div>
+            </div>
+            <div class="gal-item reveal">
+                <img src="images/4dd275af-be4f-45d6-b0e7-850bc37edcc7.JPG" alt="SMCO Health Camp Venue">
+                <div class="gal-caption"><span>Health Camp Venue</span></div>
+            </div>
+            <div class="gal-item reveal">
+                <img src="images/b00218f8-507e-47e9-8eb9-663934e5501d.JPG" alt="Patient Consultation">
+                <div class="gal-caption"><span>Free Patient Consultations</span></div>
+            </div>
+            <div class="gal-item reveal">
+                <img src="images/191019a5-2b45-4dbe-8255-799ef242ea4b.JPG" alt="Volunteer Doctors at Work">
+                <div class="gal-caption"><span>Volunteer Medical Team</span></div>
+            </div>
+            <div class="gal-item reveal">
+                <img src="images/3a508414-a32c-4106-8e05-6076db83afd5.JPG" alt="Community Outreach">
+                <div class="gal-caption"><span>Community Health Outreach</span></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= CTA ================= -->
+<section class="cta-band" aria-label="Call to action">
+    <div class="cta-inner">
+        <div class="tag tag-gold" style="margin-bottom:16px">Join Our Mission</div>
+        <h2>Together We Can<br><em>Change Lives</em></h2>
+        <p>Your support brings healthcare, education, and opportunity to the most vulnerable communities in Sarlahi. Every contribution — big or small — creates lasting change.</p>
+        <div class="cta-actions">
+            <a href="#contact" class="btn-gold-solid">
+                <i class="fas fa-heart"></i> Donate Now
+            </a>
+            <a href="#contact" class="btn-white-solid">
+                <i class="fas fa-handshake"></i> Partner With Us
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section class="contact-section" id="contact">
+    <div class="container">
+        <div class="tag">Get In Touch</div>
+        <h2 class="section-heading">Contact <em>Us</em></h2>
+        <div class="divider-line"></div>
+        <div class="contact-grid">
+            <div class="reveal">
+                <p class="lead-text" style="margin-bottom:36px">
+                    We welcome partnerships, volunteers, donors, and community members. Reach out to learn how you can be part of our mission.
+                </p>
+                <div class="cinfo-item">
+                    <div class="cinfo-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <div class="cinfo-text">
+                        <h4>Our Location</h4>
+                        <p>Chakraghatta-2, Sarlahi District<br>Province No. 2, Nepal</p>
+                    </div>
+                </div>
+                <div class="cinfo-item">
+                    <div class="cinfo-icon"><i class="fas fa-envelope"></i></div>
+                    <div class="cinfo-text">
+                        <h4>Email Us</h4>
+                        <p>info@smco.org.np</p>
+                    </div>
+                </div>
+                <div class="cinfo-item">
+                    <div class="cinfo-icon"><i class="fab fa-facebook-f"></i></div>
+                    <div class="cinfo-text">
+                        <h4>Follow Us on Facebook</h4>
+                        <p><a href="https://www.facebook.com/profile.php?id=61589824006716" target="_blank" rel="noopener noreferrer" style="color:var(--crimson);text-decoration:none;font-weight:500">Sri Mithila Community Organization</a></p>
+                    </div>
+                </div>
+                <div class="cinfo-item">
+                    <div class="cinfo-icon"><i class="fab fa-instagram"></i></div>
+                    <div class="cinfo-text">
+                        <h4>Follow Us on Instagram</h4>
+                        <p><a href="https://www.instagram.com/smco.shrimithilacommunityorg/" target="_blank" rel="noopener noreferrer" style="color:var(--crimson);text-decoration:none;font-weight:500">@smco.shrimithilacommunityorg</a></p>
+                    </div>
+                </div>
+                <div class="cinfo-item">
+                    <div class="cinfo-icon"><i class="fas fa-clock"></i></div>
+                    <div class="cinfo-text">
+                        <h4>Working Hours</h4>
+                        <p>Sunday – Friday: 9:00 AM – 5:00 PM<br>Saturday: Closed</p>
+                    </div>
+                </div>
+            </div>
+            <div class="contact-form-card reveal">
+                <h3>Send Us a Message</h3>
+                <form id="contactForm" onsubmit="handleSubmit(event)" novalidate>
+                    <div class="form-duo">
+                        <div class="fgroup">
+                            <label for="fname">Full Name</label>
+                            <input type="text" id="fname" placeholder="Your full name" required>
+                        </div>
+                        <div class="fgroup">
+                            <label for="femail">Email Address</label>
+                            <input type="email" id="femail" placeholder="your@email.com" required>
+                        </div>
+                    </div>
+                    <div class="fgroup">
+                        <label for="fsubject">Subject</label>
+                        <input type="text" id="fsubject" placeholder="How can we help you?">
+                    </div>
+                    <div class="fgroup">
+                        <label for="fmsg">Message</label>
+                        <textarea id="fmsg" placeholder="Tell us more about your interest or how you'd like to support our mission..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit" id="submitBtn">
+                        <i class="fas fa-paper-plane"></i> Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer" aria-label="Footer">
+    <div class="footer-grid">
+        <div>
+            <div class="footer-brand-wrap">
+                <img src="images/Gemini_Generated_Image_vpu0e1vpu0e1vpu0.png" alt="SMCO Logo" class="footer-logo">
+                <div class="footer-org">
+                    <strong>Shree Mithila Community Organization</strong>
+                    <small>SMCO · Est. 2022</small>
+                </div>
+            </div>
+            <p class="footer-tagline">
+                Committed to improving quality of life for marginalized communities in Sarlahi, Nepal — through education, healthcare, and sustainable development.
+            </p>
+            <div class="socials">
+                <a href="https://www.facebook.com/profile.php?id=61589824006716" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/smco.shrimithilacommunityorg/" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/company/smco-shreemithilacommunityorg" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" class="social-btn" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+        <div class="footer-col">
+            <h5>Quick Links</h5>
+            <ul>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#vision">Vision &amp; Mission</a></li>
+                <li><a href="#programs">Our Programs</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h5>Programs</h5>
+            <ul>
+                <li><a href="#programs">Education</a></li>
+                <li><a href="#programs">Digitalization</a></li>
+                <li><a href="#programs">Healthcare &amp; Nutrition</a></li>
+                <li><a href="#programs">Empowerment</a></li>
+                <li><a href="#programs">Agriculture</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h5>Contact Info</h5>
+            <div class="footer-contact-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Chakraghatta-2, Sarlahi District, Province No. 2, Nepal</span>
+            </div>
+            <div class="footer-contact-item">
+                <i class="fas fa-envelope"></i>
+                <span>info@smco.org.np</span>
+            </div>
+            <div class="footer-contact-item">
+                <i class="fab fa-facebook"></i>
+                <span><a href="https://www.facebook.com/profile.php?id=61589824006716" target="_blank" rel="noopener noreferrer" style="color:rgba(255,255,255,0.55);text-decoration:none">Sri Mithila Community Org.</a></span>
+            </div>
+            <div class="footer-contact-item">
+                <i class="fab fa-instagram"></i>
+                <span><a href="https://www.instagram.com/smco.shrimithilacommunityorg/" target="_blank" rel="noopener noreferrer" style="color:rgba(255,255,255,0.55);text-decoration:none">@smco.shrimithilacommunityorg</a></span>
+            </div>
+            <div class="footer-contact-item">
+                <i class="fab fa-linkedin-in"></i>
+                <span><a href="https://www.linkedin.com/company/smco-shreemithilacommunityorg" target="_blank" rel="noopener noreferrer" style="color:rgba(255,255,255,0.55);text-decoration:none">SMCO on LinkedIn</a></span>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bar">
+        <span>&copy; 2024 Shree Mithila Community Organization (SMCO). All rights reserved.</span>
+        <span>Made with <i class="fas fa-heart"></i> for the community of Sarlahi</span>
+        <span>Developed &amp; maintained by <a href="https://www.linkedin.com/in/rupesh-kumar-478618208/" target="_blank" rel="noopener noreferrer" style="color:var(--gold-light);text-decoration:none;font-weight:600">Rupesh Yadav</a></span>
+    </div>
+</footer>
+
+<!-- ================= SCRIPTS ================= -->
+<script>
+    /* --- Navbar scroll class --- */
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+        navbar.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    /* --- Mobile menu --- */
+    const mobileMenu = document.getElementById('mobileMenu');
+    document.getElementById('hamburger').addEventListener('click', () => {
+        mobileMenu.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    });
+    document.getElementById('mobileClose').addEventListener('click', closeMobileMenu);
+    function closeMobileMenu() {
+        mobileMenu.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    /* --- Scroll reveal --- */
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry, i) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => entry.target.classList.add('show'), i * 90);
+            }
+        });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    /* --- Animated counters --- */
+    function runCounter(el) {
+        const target = parseInt(el.dataset.target, 10);
+        const duration = 1800;
+        const fps = 60;
+        const total = Math.round(duration / (1000 / fps));
+        let frame = 0;
+        const easeOut = t => 1 - Math.pow(1 - t, 3);
+        const timer = setInterval(() => {
+            frame++;
+            const progress = easeOut(frame / total);
+            el.textContent = Math.round(progress * target).toLocaleString();
+            if (frame >= total) { el.textContent = target.toLocaleString(); clearInterval(timer); }
+        }, 1000 / fps);
+    }
+    const counterObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                runCounter(entry.target);
+                counterObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+    document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
+
+    /* --- Contact form --- */
+    function handleSubmit(e) {
+        e.preventDefault();
+        const btn = document.getElementById('submitBtn');
+        btn.innerHTML = '<i class="fas fa-check-circle"></i> Message Sent!';
+        btn.style.background = 'linear-gradient(135deg, #2E7D32, #43A047)';
+        btn.style.boxShadow = '0 6px 24px rgba(46,125,50,0.4)';
+        setTimeout(() => {
+            btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
+            btn.style.background = '';
+            btn.style.boxShadow = '';
+            e.target.reset();
+        }, 3500);
+    }
+</script>
+</body>
+</html>
