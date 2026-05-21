@@ -9,6 +9,7 @@
     <link rel="apple-touch-icon" href="images/smco_colored_logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
     <style>
         /* ====================================================
            DESIGN TOKENS — Extracted from banner.png
@@ -486,6 +487,22 @@
         }
         .prog-card p { font-size:0.87rem; color:var(--gray); line-height:1.75; }
 
+        .prog-card.featured {
+            grid-row:span 2;
+            display:flex; flex-direction:column; justify-content:center; align-items:center;
+            padding:48px 32px;
+            background:linear-gradient(160deg, #ffffff 0%, rgba(200,150,12,0.06) 100%);
+            border-bottom:3px solid var(--gold);
+        }
+        .prog-card.featured .prog-icon {
+            width:88px; height:88px; margin-bottom:22px;
+            background:linear-gradient(135deg, var(--crimson), var(--saffron));
+            box-shadow:0 8px 24px rgba(183,28,28,0.25);
+        }
+        .prog-card.featured .prog-icon i { color:white; font-size:2rem; }
+        .prog-card.featured h3 { font-size:1.35rem; margin-bottom:16px; }
+        .prog-card.featured p { font-size:0.95rem; max-width:340px; }
+
         /* ====================================================
            GALLERY
         ==================================================== */
@@ -662,6 +679,65 @@
         .btn-white-solid:hover {
             transform:translateY(-3px);
             box-shadow:0 10px 28px rgba(0,0,0,0.18);
+        }
+
+        /* ====================================================
+           CAMP LOCATIONS MAP
+        ==================================================== */
+        .camps-section { background:var(--off-white); }
+        .camps-grid {
+            display:grid; grid-template-columns:1.6fr 1fr;
+            gap:36px; margin-top:52px;
+            align-items:stretch;
+        }
+        .camps-map-wrap {
+            position:relative;
+            border-radius:var(--radius-lg);
+            overflow:hidden;
+            box-shadow:var(--shadow-soft);
+            min-height:460px;
+            background:#e8eef5;
+        }
+        #campsMap { width:100%; height:100%; min-height:460px; }
+        .camps-side {
+            display:flex; flex-direction:column; gap:14px;
+        }
+        .camp-card {
+            background:white; border-radius:var(--radius);
+            padding:18px 20px;
+            box-shadow:var(--shadow-soft);
+            display:flex; gap:14px; align-items:flex-start;
+            border-left:4px solid var(--crimson);
+            transition:transform 0.25s ease, box-shadow 0.25s ease;
+            cursor:pointer;
+            text-decoration:none; color:inherit;
+        }
+        .camp-card:hover {
+            transform:translateX(4px);
+            box-shadow:var(--shadow-red);
+            border-left-color:var(--gold);
+        }
+        .camp-card-pin {
+            width:42px; height:42px; flex-shrink:0;
+            border-radius:50%;
+            background:linear-gradient(135deg,var(--crimson),var(--saffron));
+            display:flex; align-items:center; justify-content:center;
+            color:white; font-size:1rem;
+            box-shadow:0 4px 14px rgba(183,28,28,0.3);
+        }
+        .camp-card-body { flex:1; }
+        .camp-card-title {
+            font-size:1rem; font-weight:700; color:var(--dark);
+            margin-bottom:4px;
+        }
+        .camp-card-meta {
+            font-size:0.82rem; color:var(--gray);
+            display:flex; align-items:center; gap:6px;
+        }
+        .camp-card-cta {
+            font-size:0.78rem; color:var(--crimson);
+            font-weight:600; margin-top:6px;
+            display:inline-flex; align-items:center; gap:5px;
         }
 
         /* ====================================================
@@ -915,7 +991,7 @@
 
         /* ── Sub grid (remaining members) ── */
         .team-sub-grid {
-            display:grid; grid-template-columns:repeat(4,1fr);
+            display:grid; grid-template-columns:repeat(3,1fr);
             gap:22px; margin-top:28px;
         }
         .member-card {
@@ -1033,6 +1109,219 @@
         .skel-social-btn { width:32px; height:32px; border-radius:8px; }
 
         /* ====================================================
+           FLOATING DONATE WIDGET (chat-bubble style FAB)
+        ==================================================== */
+        .donate-fab {
+            position:fixed; bottom:26px; right:26px;
+            z-index:2500;
+            width:64px; height:64px;
+            border-radius:50%; border:none; cursor:pointer; padding:0;
+            background:transparent;
+            display:flex; align-items:center; justify-content:center;
+            transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+            animation:fabEntry 0.6s cubic-bezier(0.34,1.56,0.64,1) 0.8s both;
+        }
+        .donate-fab:hover { transform:scale(1.08); }
+        .donate-fab:active { transform:scale(0.96); }
+
+        .donate-fab-inner {
+            position:relative; z-index:3;
+            width:64px; height:64px; border-radius:50%;
+            background:linear-gradient(135deg,#B71C1C 0%,#C8960C 100%);
+            box-shadow:0 8px 26px rgba(183,28,28,0.5),
+                       0 0 0 3px rgba(255,255,255,0.95);
+            display:flex; align-items:center; justify-content:center;
+            color:white; font-size:1.5rem;
+            animation:fabHeartBeat 1.8s ease-in-out infinite;
+        }
+
+        .donate-fab-pulse {
+            position:absolute; top:50%; left:50%;
+            width:64px; height:64px;
+            border-radius:50%;
+            background:rgba(183,28,28,0.55);
+            transform:translate(-50%,-50%);
+            animation:fabPulse 2s ease-out infinite;
+            z-index:1;
+        }
+        .donate-fab-pulse-2 { animation-delay:1s; background:rgba(200,150,12,0.55); }
+
+        .donate-fab-label {
+            position:absolute; right:74px; top:50%;
+            transform:translateY(-50%) translateX(8px);
+            background:#1a0505; color:white;
+            font-size:0.82rem; font-weight:600;
+            padding:8px 14px; border-radius:20px;
+            white-space:nowrap; pointer-events:none;
+            opacity:0; transition:all 0.28s ease;
+            box-shadow:0 6px 18px rgba(0,0,0,0.25);
+        }
+        .donate-fab-label::after {
+            content:''; position:absolute; right:-6px; top:50%;
+            transform:translateY(-50%);
+            border-left:7px solid #1a0505;
+            border-top:6px solid transparent;
+            border-bottom:6px solid transparent;
+        }
+        .donate-fab:hover .donate-fab-label,
+        .donate-fab:focus-visible .donate-fab-label {
+            opacity:1; transform:translateY(-50%) translateX(0);
+        }
+
+        .donate-fab-badge {
+            position:absolute; bottom:-2px; right:-4px;
+            width:26px; height:26px; border-radius:50%;
+            background:#25D366; color:white;
+            display:flex; align-items:center; justify-content:center;
+            font-size:0.72rem;
+            border:2.5px solid white;
+            z-index:4;
+            box-shadow:0 3px 10px rgba(37,211,102,0.5);
+            animation:fabBadgeBounce 2.4s ease-in-out infinite;
+        }
+
+        @keyframes fabPulse {
+            0%   { transform:translate(-50%,-50%) scale(1);   opacity:0.7; }
+            70%  { transform:translate(-50%,-50%) scale(1.9); opacity:0; }
+            100% { transform:translate(-50%,-50%) scale(1.9); opacity:0; }
+        }
+        @keyframes fabHeartBeat {
+            0%, 100% { transform:scale(1); }
+            14%      { transform:scale(1.12); }
+            28%      { transform:scale(1); }
+            42%      { transform:scale(1.08); }
+            56%      { transform:scale(1); }
+        }
+        @keyframes fabEntry {
+            from { opacity:0; transform:scale(0.4) translateY(20px); }
+            to   { opacity:1; transform:scale(1) translateY(0); }
+        }
+        @keyframes fabBadgeBounce {
+            0%, 100% { transform:translateY(0); }
+            50%      { transform:translateY(-3px); }
+        }
+
+        @media (max-width:560px) {
+            .donate-fab { bottom:20px; right:18px; width:58px; height:58px; }
+            .donate-fab-inner { width:58px; height:58px; font-size:1.35rem; }
+            .donate-fab-pulse { width:58px; height:58px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .donate-fab-inner,
+            .donate-fab-pulse,
+            .donate-fab-badge { animation:none; }
+        }
+
+        /* ====================================================
+           DONATE MODAL
+        ==================================================== */
+        .donate-backdrop {
+            position:fixed; inset:0;
+            background:rgba(15,5,5,0.72);
+            backdrop-filter:blur(6px);
+            z-index:2999;
+            opacity:0; pointer-events:none;
+            transition:opacity 0.28s ease;
+        }
+        .donate-backdrop.show { opacity:1; pointer-events:auto; }
+
+        .donate-modal {
+            position:fixed; top:50%; left:50%;
+            transform:translate(-50%, -50%) scale(0.94);
+            z-index:3000;
+            background:linear-gradient(160deg,#1a0505 0%,#7F0000 100%);
+            border:1px solid rgba(200,150,12,0.45);
+            border-radius:20px;
+            padding:32px 32px 28px;
+            box-shadow:0 30px 90px rgba(0,0,0,0.55), 0 0 0 1px rgba(200,150,12,0.18);
+            max-width:480px; width:calc(100% - 32px);
+            max-height:calc(100vh - 48px); overflow-y:auto;
+            opacity:0; pointer-events:none;
+            transition:transform 0.34s cubic-bezier(0.34,1.4,0.64,1), opacity 0.28s ease;
+        }
+        .donate-modal.show {
+            transform:translate(-50%, -50%) scale(1);
+            opacity:1; pointer-events:auto;
+        }
+        .donate-modal-header {
+            display:flex; align-items:center; gap:14px;
+            margin-bottom:20px; padding-bottom:18px;
+            border-bottom:1px solid rgba(200,150,12,0.2);
+        }
+        .donate-modal-icon {
+            width:48px; height:48px; flex-shrink:0;
+            background:linear-gradient(135deg,var(--gold),#E6A820);
+            border-radius:14px;
+            display:flex; align-items:center; justify-content:center;
+            font-size:1.2rem; color:var(--dark);
+            box-shadow:0 4px 14px rgba(200,150,12,0.5);
+        }
+        .donate-modal-title {
+            flex:1;
+            font-size:1.15rem; font-weight:700; color:white;
+        }
+        .donate-modal-title small {
+            display:block; font-size:0.78rem; font-weight:400;
+            color:rgba(255,255,255,0.62); margin-top:2px;
+        }
+        .donate-modal-close {
+            background:rgba(255,255,255,0.08); border:none; cursor:pointer;
+            width:32px; height:32px; border-radius:50%;
+            color:rgba(255,255,255,0.7); font-size:1.05rem;
+            display:flex; align-items:center; justify-content:center;
+            transition:all 0.2s; flex-shrink:0;
+        }
+        .donate-modal-close:hover { background:rgba(255,255,255,0.16); color:white; }
+
+        .donate-section-label {
+            font-size:0.7rem; font-weight:700; letter-spacing:1.4px;
+            color:var(--gold-light); text-transform:uppercase;
+            margin-bottom:10px;
+        }
+        .donate-whatsapp-link {
+            display:flex; align-items:center; gap:14px;
+            background:linear-gradient(135deg,#25D366,#128C7E);
+            color:white; text-decoration:none;
+            padding:14px 18px; border-radius:12px;
+            font-weight:600; font-size:0.95rem;
+            box-shadow:0 6px 18px rgba(37,211,102,0.28);
+            transition:transform 0.2s, box-shadow 0.2s;
+            margin-bottom:24px;
+        }
+        .donate-whatsapp-link:hover {
+            transform:translateY(-2px);
+            box-shadow:0 10px 24px rgba(37,211,102,0.4);
+        }
+        .donate-whatsapp-link i { font-size:1.4rem; }
+        .donate-whatsapp-link small {
+            display:block; font-size:0.72rem; font-weight:400;
+            opacity:0.85; margin-top:2px;
+        }
+
+        .donate-bank-card {
+            background:rgba(255,255,255,0.05);
+            border:1px solid rgba(200,150,12,0.18);
+            border-radius:12px;
+            padding:16px 18px;
+        }
+        .donate-bank-row {
+            display:flex; justify-content:space-between; gap:14px;
+            padding:8px 0;
+            border-bottom:1px dashed rgba(255,255,255,0.08);
+            font-size:0.85rem;
+        }
+        .donate-bank-row:last-child { border-bottom:none; }
+        .donate-bank-label {
+            color:rgba(255,255,255,0.6); font-weight:500;
+            flex-shrink:0;
+        }
+        .donate-bank-val {
+            color:white; font-weight:600; text-align:right;
+            font-family:'Courier New', monospace;
+            word-break:break-word;
+        }
+
+        /* ====================================================
            SCROLL ANIMATIONS
         ==================================================== */
         .reveal {
@@ -1079,7 +1368,11 @@
             .nav-title-wrap small { display:none; }
             .vm-grid { grid-template-columns:1fr; }
             .programs-grid { grid-template-columns:1fr 1fr; }
+            .prog-card.featured { grid-row:auto; grid-column:span 2; }
             .contact-grid { grid-template-columns:1fr; gap:32px; }
+            .camps-grid { grid-template-columns:1fr; gap:28px; }
+            .camps-map-wrap { min-height:380px; }
+            #campsMap { min-height:380px; }
             .gal-grid-5 { grid-template-columns:1fr 1fr; grid-template-rows:repeat(3,180px); }
             .gal-grid-5 .gal-photo:first-child { grid-column:1/3; }
             .gal-grid-6 { grid-template-columns:1fr 1fr; grid-template-rows:repeat(3,170px); }
@@ -1091,6 +1384,7 @@
         @media (max-width:480px) {
             section { padding:70px 18px; }
             .programs-grid { grid-template-columns:1fr; }
+            .prog-card.featured { grid-column:auto; }
             .stats-inner { grid-template-columns:1fr 1fr; }
             .stat-card { border-right:none; border-bottom:1px solid rgba(255,255,255,0.1); }
             .stat-card:nth-child(odd) { border-right:1px solid rgba(255,255,255,0.1); }
@@ -1121,7 +1415,7 @@
             <li><a href="#team">Team</a></li>
             <li><a href="#gallery">Gallery</a></li>
             <li><a href="#contact">Contact</a></li>
-            <li><a href="#contact" class="nav-cta">Donate Now</a></li>
+            <li><a href="#" class="nav-cta" onclick="showDonateToast(event)">Donate Now</a></li>
         </ul>
         <div class="hamburger" id="hamburger" aria-label="Open menu">
             <span></span><span></span><span></span>
@@ -1138,7 +1432,7 @@
     <a href="#team"      onclick="closeMobileMenu()">Our Team</a>
     <a href="#gallery"   onclick="closeMobileMenu()">Gallery</a>
     <a href="#contact"   onclick="closeMobileMenu()">Contact</a>
-    <a href="#contact"   onclick="closeMobileMenu()" style="color:var(--gold-light)">&#9829; Donate</a>
+    <a href="#" onclick="closeMobileMenu();showDonateToast(event)" style="color:var(--gold-light)">&#9829; Donate</a>
 </div>
 
 <!-- ================= HERO ================= -->
@@ -1189,7 +1483,7 @@
         </div>
         <div class="stat-card reveal">
             <div class="icon"><i class="fas fa-layer-group"></i></div>
-            <div class="number"><span class="counter" data-target="6">0</span></div>
+            <div class="number"><span class="counter" data-target="5">0</span></div>
             <div class="label">Program Areas</div>
         </div>
         <div class="stat-card reveal">
@@ -1225,7 +1519,7 @@
                     </div>
                     <div class="org-row">
                         <span class="org-key">Focus</span>
-                        <span class="org-val">Education, Healthcare, Nutrition, Sanitation &amp; Empowerment of marginalized populations</span>
+                        <span class="org-val">Education, Healthcare, Nutrition &amp; Empowerment of marginalized populations</span>
                     </div>
                     <div class="org-row">
                         <span class="org-key">Vision</span>
@@ -1283,13 +1577,14 @@
             </div>
             <div class="spotlight-content">
                 <div class="spotlight-badges">
-                    <span class="badge-chairperson">Chairperson</span>
+                    <span class="badge-chairperson">President</span>
                     <span class="badge-usa-exp"><i class="fas fa-hospital"></i> U.S. Government Healthcare Expert</span>
                 </div>
-                <h3 class="spotlight-name">Dr. Manoj Ray</h3>
-                <p class="spotlight-title-sub">Founder &amp; Chairperson — Shree Mithila Community Organization</p>
+                <h3 class="spotlight-name">Dr. Manoj Kumar Ray</h3>
+                <p class="spotlight-title-sub">Founder &amp; President — Shree Mithila Community Organization</p>
+                <p class="spotlight-title-sub" style="font-size:0.85rem; opacity:0.85; margin-top:-4px"><i class="fas fa-map-marker-alt"></i> Chakraghatta Gaupalika, Ward 2, Sarlahi</p>
                 <div class="spotlight-divider"></div>
-                <p class="spotlight-bio">A distinguished healthcare professional with extensive experience in U.S. Government healthcare systems, Dr. Manoj Ray brings world-class medical leadership and public health expertise back to his roots in Sarlahi. His vision drives SMCO's commitment to accessible, high-quality healthcare and sustainable community development across Chakraghatta Gaupalika.</p>
+                <p class="spotlight-bio">A distinguished healthcare professional with extensive experience in U.S. Government healthcare systems, Dr. Manoj Kumar Ray brings world-class medical leadership and public health expertise back to his roots in Sarlahi. His vision drives SMCO's commitment to accessible, high-quality healthcare and sustainable community development across Chakraghatta Gaupalika.</p>
                 <div class="spotlight-socials">
                     <a href="#" class="spotlight-social-btn" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
                     <a href="#" class="spotlight-social-btn" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
@@ -1300,46 +1595,66 @@
 
         <!-- ── Sub-grid: remaining members ── -->
         <div class="team-sub-grid">
-            <!-- Vice Chairperson -->
+            <!-- Vice-President -->
             <div class="member-card reveal">
                 <div class="member-avatar" style="background:linear-gradient(135deg,#C8960C,#E65100)">PJ</div>
-                <div class="role-badge badge-vp">Vice Chairperson</div>
-                <div class="member-name">Pankaj Jha</div>
-                <p class="member-bio">Dedicated community leader overseeing field programs, volunteer coordination, and outreach. Key driver of SMCO's education and empowerment initiatives across Sarlahi.</p>
+                <div class="role-badge badge-vp">Vice-President</div>
+                <div class="member-name">Pankaj Kumar Jha</div>
+                <p class="member-bio"><i class="fas fa-map-marker-alt"></i> Malangwa N.P., Ward 3, Sarlahi<br>Dedicated community leader overseeing field programs, volunteer coordination, and outreach across the district.</p>
                 <div class="member-socials">
                     <a href="#" class="member-social-btn" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
                     <a href="#" class="member-social-btn" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                 </div>
             </div>
-            <!-- General Secretary skeleton -->
+            <!-- Secretary -->
             <div class="member-card reveal">
-                <div class="skel skel-avatar"></div>
-                <div class="role-badge badge-secretary">General Secretary</div>
-                <div class="skel skel-name"></div>
-                <div class="skel skel-line skel-line-lg" style="margin-top:12px"></div>
-                <div class="skel skel-line skel-line-md"></div>
-                <div class="skel skel-line skel-line-sm"></div>
-                <div class="skel-social"><div class="skel skel-social-btn"></div></div>
+                <div class="member-avatar" style="background:linear-gradient(135deg,#1565C0,#0D47A1)">BD</div>
+                <div class="role-badge badge-secretary">Secretary</div>
+                <div class="member-name">Bindu Devi</div>
+                <p class="member-bio"><i class="fas fa-map-marker-alt"></i> Brahmpuri G.P., Ward 3, Sarlahi<br>Coordinates organizational records, meetings, and communication for SMCO's day-to-day operations.</p>
+                <div class="member-socials">
+                    <a href="#" class="member-social-btn" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                </div>
             </div>
-            <!-- Treasurer skeleton -->
+            <!-- Treasurer -->
             <div class="member-card reveal">
-                <div class="skel skel-avatar"></div>
+                <div class="member-avatar" style="background:linear-gradient(135deg,#1B5E20,#2E7D32)">BR</div>
                 <div class="role-badge badge-treasurer">Treasurer</div>
-                <div class="skel skel-name"></div>
-                <div class="skel skel-line skel-line-lg" style="margin-top:12px"></div>
-                <div class="skel skel-line skel-line-md"></div>
-                <div class="skel skel-line skel-line-sm"></div>
-                <div class="skel-social"><div class="skel skel-social-btn"></div></div>
+                <div class="member-name">Badri Ray</div>
+                <p class="member-bio"><i class="fas fa-map-marker-alt"></i> Malangwa N.P., Ward 3, Sarlahi<br>Manages SMCO's finances, donor records, and fund allocation across all program areas.</p>
+                <div class="member-socials">
+                    <a href="#" class="member-social-btn" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                </div>
             </div>
-            <!-- Executive Member skeleton -->
+            <!-- General Member -->
             <div class="member-card reveal">
-                <div class="skel skel-avatar"></div>
-                <div class="role-badge badge-member">Executive Member</div>
-                <div class="skel skel-name"></div>
-                <div class="skel skel-line skel-line-lg" style="margin-top:12px"></div>
-                <div class="skel skel-line skel-line-md"></div>
-                <div class="skel skel-line skel-line-sm"></div>
-                <div class="skel-social"><div class="skel skel-social-btn"></div></div>
+                <div class="member-avatar" style="background:linear-gradient(135deg,#6A1B9A,#4A148C)">SK</div>
+                <div class="role-badge badge-member">General Member</div>
+                <div class="member-name">Shobha Kumari</div>
+                <p class="member-bio"><i class="fas fa-map-marker-alt"></i> Chakraghatta G.P., Ward 9, Sarlahi<br>Active contributor to women's empowerment and community outreach activities.</p>
+                <div class="member-socials">
+                    <a href="#" class="member-social-btn" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+            <!-- General Member -->
+            <div class="member-card reveal">
+                <div class="member-avatar" style="background:linear-gradient(135deg,#00838F,#006064)">LY</div>
+                <div class="role-badge badge-member">General Member</div>
+                <div class="member-name">Lalita Devi Yadav</div>
+                <p class="member-bio"><i class="fas fa-map-marker-alt"></i> Haripurwa N.P., Ward 2, Sarlahi<br>Supports health camps, awareness drives, and grassroots mobilization in the community.</p>
+                <div class="member-socials">
+                    <a href="#" class="member-social-btn" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+            <!-- General Member -->
+            <div class="member-card reveal">
+                <div class="member-avatar" style="background:linear-gradient(135deg,#C2185B,#880E4F)">MR</div>
+                <div class="role-badge badge-member">General Member</div>
+                <div class="member-name">Mithilesh Ray</div>
+                <p class="member-bio"><i class="fas fa-map-marker-alt"></i> Chakraghatta G.P., Ward 2, Sarlahi<br>Engaged in youth outreach, education initiatives, and field-level program delivery.</p>
+                <div class="member-socials">
+                    <a href="#" class="member-social-btn" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                </div>
             </div>
         </div>
     </div>
@@ -1350,13 +1665,18 @@
     <div class="container">
         <div style="text-align:center">
             <div class="tag">What We Do</div>
-            <h2 class="section-heading">Our SiX <em>Program Areas</em></h2>
+            <h2 class="section-heading">Our Five <em>Program Areas</em></h2>
             <div class="divider-line center"></div>
             <p class="lead-text" style="margin:0 auto 0">
-                Six focused pillars that directly impact thousands of lives across Sarlahi every year.
+                Five focused pillars that directly impact thousands of lives across Sarlahi every year.
             </p>
         </div>
         <div class="programs-grid">
+            <div class="prog-card featured reveal">
+                <div class="prog-icon"><i class="fas fa-heartbeat"></i></div>
+                <h3>Healthcare &amp; Nutrition</h3>
+                <p>Expanding access through free health camps, awareness drives, maternal care, and targeted programs to combat child malnutrition across the district.</p>
+            </div>
             <div class="prog-card reveal">
                 <div class="prog-icon"><i class="fas fa-book-open"></i></div>
                 <h3>Education</h3>
@@ -1368,11 +1688,6 @@
                 <p>Empowering rural schools and youth with computer literacy programs — bridging the digital divide and unlocking opportunities for the next generation.</p>
             </div>
             <div class="prog-card reveal">
-                <div class="prog-icon"><i class="fas fa-heartbeat"></i></div>
-                <h3>Healthcare &amp; Nutrition</h3>
-                <p>Expanding access through free health camps, awareness drives, maternal care, and targeted programs to combat child malnutrition across the district.</p>
-            </div>
-            <div class="prog-card reveal">
                 <div class="prog-icon"><i class="fas fa-hands-helping"></i></div>
                 <h3>Empowerment</h3>
                 <p>Fostering skill development and economic independence for women and marginalized groups through vocational training and entrepreneurship mentorship.</p>
@@ -1381,13 +1696,6 @@
                 <div class="prog-icon"><i class="fas fa-seedling"></i></div>
                 <h3>Agricultural Modernization</h3>
                 <p>Supporting sustainable farming techniques and modern agricultural practices to improve yields, food security, and livelihoods for rural families.</p>
-            </div>
-            <div class="prog-card reveal" style="border-bottom:3px solid var(--gold)">
-                <div class="prog-icon" style="background:linear-gradient(135deg,rgba(183,28,28,0.1),rgba(200,150,12,0.12))">
-                    <i class="fas fa-tint" style="color:var(--gold)"></i>
-                </div>
-                <h3>Sanitation &amp; Hygiene</h3>
-                <p>Promoting clean water access, sanitation infrastructure, and hygiene education to reduce preventable disease and improve overall community health.</p>
             </div>
         </div>
     </div>
@@ -1475,6 +1783,52 @@
     </div>
 </section>
 
+<!-- ================= CAMP LOCATIONS MAP ================= -->
+<section class="camps-section" id="camps">
+    <div class="container">
+        <div style="text-align:center">
+            <div class="tag">Where We've Worked</div>
+            <h2 class="section-heading">Camps <em>Organized So Far</em></h2>
+            <div class="divider-line center"></div>
+            <p class="lead-text" style="margin:0 auto">These are the locations across Sarlahi District where SMCO has previously organized health camps, outreach drives, and community programs. No active camp is running at these sites right now — they mark our footprint of past work.</p>
+        </div>
+        <div class="camps-grid reveal">
+            <div class="camps-map-wrap">
+                <div id="campsMap" aria-label="Map of SMCO camp locations in Sarlahi, Nepal"></div>
+            </div>
+            <div class="camps-side">
+                <a class="camp-card" href="https://www.google.com/maps/search/?api=1&query=Bhelahi+Sarlahi+Nepal" target="_blank" rel="noopener noreferrer">
+                    <div class="camp-card-pin"><i class="fas fa-check"></i></div>
+                    <div class="camp-card-body">
+                        <div class="camp-card-title">Bhelahi - 2</div>
+                        <div class="camp-card-meta"><i class="fas fa-location-dot"></i> Sarlahi District, Nepal</div>
+                        <div class="camp-card-meta" style="margin-top:4px"><i class="fas fa-calendar-check" style="color:var(--gold)"></i> Camp organized here</div>
+                        <span class="camp-card-cta">View on Google Maps <i class="fas fa-arrow-up-right-from-square"></i></span>
+                    </div>
+                </a>
+                <a class="camp-card" href="https://www.google.com/maps/search/?api=1&query=Malangwa+10+Sarlahi+Nepal" target="_blank" rel="noopener noreferrer">
+                    <div class="camp-card-pin"><i class="fas fa-check"></i></div>
+                    <div class="camp-card-body">
+                        <div class="camp-card-title">Malangwa - 10</div>
+                        <div class="camp-card-meta"><i class="fas fa-location-dot"></i> Malangwa Municipality, Sarlahi</div>
+                        <div class="camp-card-meta" style="margin-top:4px"><i class="fas fa-calendar-check" style="color:var(--gold)"></i> Camp organized here</div>
+                        <span class="camp-card-cta">View on Google Maps <i class="fas fa-arrow-up-right-from-square"></i></span>
+                    </div>
+                </a>
+                <a class="camp-card" href="https://www.google.com/maps/search/?api=1&query=Brahmpuri+Sarlahi+Nepal" target="_blank" rel="noopener noreferrer">
+                    <div class="camp-card-pin"><i class="fas fa-check"></i></div>
+                    <div class="camp-card-body">
+                        <div class="camp-card-title">Brahmpuri</div>
+                        <div class="camp-card-meta"><i class="fas fa-location-dot"></i> Brahmpuri Gaupalika, Sarlahi</div>
+                        <div class="camp-card-meta" style="margin-top:4px"><i class="fas fa-calendar-check" style="color:var(--gold)"></i> Camp organized here</div>
+                        <span class="camp-card-cta">View on Google Maps <i class="fas fa-arrow-up-right-from-square"></i></span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- ================= LIGHTBOX ================= -->
 <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
     <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
@@ -1489,7 +1843,7 @@
         <h2>Together We Can<br><em>Change Lives</em></h2>
         <p>Your support brings healthcare, education, and opportunity to the most vulnerable communities in Sarlahi. Every contribution — big or small — creates lasting change.</p>
         <div class="cta-actions">
-            <a href="#contact" class="btn-gold-solid">
+            <a href="#" class="btn-gold-solid" onclick="showDonateToast(event)">
                 <i class="fas fa-heart"></i> Donate Now
             </a>
             <a href="#contact" class="btn-white-solid">
@@ -1514,14 +1868,14 @@
                     <div class="cinfo-icon"><i class="fas fa-map-marker-alt"></i></div>
                     <div class="cinfo-text">
                         <h4>Our Location</h4>
-                        <p>Chakraghatta-2, Sarlahi District<br>Province No. 2, Nepal</p>
+                        <p><a href="https://www.google.com/maps/search/?api=1&query=Chakraghatta-2+Sarlahi+Nepal" target="_blank" rel="noopener noreferrer" style="color:var(--crimson);text-decoration:none;font-weight:500">Chakraghatta-2, Sarlahi District<br>Province No. 2, Nepal <i class="fas fa-arrow-up-right-from-square" style="font-size:0.72rem;margin-left:4px"></i></a></p>
                     </div>
                 </div>
                 <div class="cinfo-item">
                     <div class="cinfo-icon"><i class="fas fa-envelope"></i></div>
                     <div class="cinfo-text">
                         <h4>Email Us</h4>
-                        <p>info@smco.org.np</p>
+                        <p><a href="mailto:mithilacommunityorganization@gmail.com" style="color:var(--crimson);text-decoration:none;font-weight:500;word-break:break-all">mithilacommunityorganization@gmail.com</a></p>
                     </div>
                 </div>
                 <div class="cinfo-item">
@@ -1542,7 +1896,7 @@
                     <div class="cinfo-icon"><i class="fas fa-clock"></i></div>
                     <div class="cinfo-text">
                         <h4>Working Hours</h4>
-                        <p>Sunday – Friday: 9:00 AM – 5:00 PM<br>Saturday: Closed</p>
+                        <p>Monday – Friday: 9:00 AM – 5:00 PM</p>
                     </div>
                 </div>
             </div>
@@ -1622,11 +1976,11 @@
             <h5>Contact Info</h5>
             <div class="footer-contact-item">
                 <i class="fas fa-map-marker-alt"></i>
-                <span>Chakraghatta-2, Sarlahi District, Province No. 2, Nepal</span>
+                <span><a href="https://www.google.com/maps/search/?api=1&query=Chakraghatta-2+Sarlahi+Nepal" target="_blank" rel="noopener noreferrer" style="color:rgba(255,255,255,0.55);text-decoration:none">Chakraghatta-2, Sarlahi District, Province No. 2, Nepal</a></span>
             </div>
             <div class="footer-contact-item">
                 <i class="fas fa-envelope"></i>
-                <span>info@smco.org.np</span>
+                <span><a href="mailto:mithilacommunityorganization@gmail.com" style="color:rgba(255,255,255,0.55);text-decoration:none;word-break:break-all">mithilacommunityorganization@gmail.com</a></span>
             </div>
             <div class="footer-contact-item">
                 <i class="fab fa-facebook"></i>
@@ -1649,8 +2003,79 @@
     </div>
 </footer>
 
+<!-- ================= DONATE MODAL ================= -->
+<div class="donate-backdrop" id="donateBackdrop" onclick="closeDonateToast()"></div>
+<div class="donate-modal" id="donateToast" role="dialog" aria-modal="true" aria-labelledby="donateModalTitle">
+    <div class="donate-modal-header">
+        <div class="donate-modal-icon"><i class="fas fa-heart"></i></div>
+        <div class="donate-modal-title" id="donateModalTitle">
+            Support SMCO
+            <small>Your contribution powers education, healthcare &amp; empowerment across Sarlahi.</small>
+        </div>
+        <button class="donate-modal-close" onclick="closeDonateToast()" aria-label="Close">&times;</button>
+    </div>
+
+    <div class="donate-section-label"><i class="fab fa-whatsapp"></i> Contact to Donate</div>
+    <a href="https://wa.me/9779860805623" target="_blank" rel="noopener noreferrer" class="donate-whatsapp-link">
+        <i class="fab fa-whatsapp"></i>
+        <span>
+            Message us on WhatsApp
+            <small>+977 98608 05623 — opens WhatsApp</small>
+        </span>
+    </a>
+
+    <!-- Bank details hidden for now — will be revealed once finalized
+    <div class="donate-section-label"><i class="fas fa-university"></i> Bank Details</div>
+    <div class="donate-bank-card">
+        <div class="donate-bank-row">
+            <span class="donate-bank-label">Account Name</span>
+            <span class="donate-bank-val">Shree Mithila Community Organization</span>
+        </div>
+        <div class="donate-bank-row">
+            <span class="donate-bank-label">Bank</span>
+            <span class="donate-bank-val">—</span>
+        </div>
+        <div class="donate-bank-row">
+            <span class="donate-bank-label">Account No.</span>
+            <span class="donate-bank-val">—</span>
+        </div>
+        <div class="donate-bank-row">
+            <span class="donate-bank-label">Branch</span>
+            <span class="donate-bank-val">—</span>
+        </div>
+    </div>
+    -->
+</div>
+
+<!-- ================= FLOATING DONATE WIDGET ================= -->
+<button class="donate-fab" id="donateFab" onclick="showDonateToast(event)" aria-label="Donate to SMCO">
+    <span class="donate-fab-pulse"></span>
+    <span class="donate-fab-pulse donate-fab-pulse-2"></span>
+    <span class="donate-fab-inner">
+        <i class="fas fa-heart"></i>
+    </span>
+    <span class="donate-fab-label">Donate</span>
+    <span class="donate-fab-badge"><i class="fab fa-whatsapp"></i></span>
+</button>
+
 <!-- ================= SCRIPTS ================= -->
 <script>
+    /* --- Donate modal --- */
+    function showDonateToast(e) {
+        if (e) e.preventDefault();
+        document.getElementById('donateBackdrop').classList.add('show');
+        document.getElementById('donateToast').classList.add('show');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeDonateToast() {
+        document.getElementById('donateBackdrop').classList.remove('show');
+        document.getElementById('donateToast').classList.remove('show');
+        document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeDonateToast();
+    });
+
     /* --- Navbar scroll class --- */
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
@@ -1721,19 +2146,98 @@
     }
 
     /* --- Contact form --- */
-    function handleSubmit(e) {
+    /* ---- Google Sheets integration ----
+       Replace GOOGLE_SCRIPT_URL with your deployed Apps Script web app URL */
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwtW9Tquzy0O1NZ6EsEYoWTVEktDS29qCPH-dOSgoniuUuJmc4zoI0huFgN7mIfDUX7FQ/exec';
+
+    async function handleSubmit(e) {
         e.preventDefault();
         const btn = document.getElementById('submitBtn');
-        btn.innerHTML = '<i class="fas fa-check-circle"></i> Message Sent!';
-        btn.style.background = 'linear-gradient(135deg, #2E7D32, #43A047)';
-        btn.style.boxShadow = '0 6px 24px rgba(46,125,50,0.4)';
+        const originalHTML = btn.innerHTML;
+
+        const params = new URLSearchParams({
+            timestamp: new Date().toLocaleString('en-US', { timeZone: 'Asia/Kathmandu' }),
+            name:    document.getElementById('fname').value.trim(),
+            email:   document.getElementById('femail').value.trim(),
+            subject: document.getElementById('fsubject').value.trim(),
+            message: document.getElementById('fmsg').value.trim(),
+        });
+
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending…';
+        btn.disabled = true;
+
+        try {
+            await fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: params.toString(),
+            });
+            btn.innerHTML = '<i class="fas fa-check-circle"></i> Message Sent!';
+            btn.style.background = 'linear-gradient(135deg, #2E7D32, #43A047)';
+            btn.style.boxShadow = '0 6px 24px rgba(46,125,50,0.4)';
+            e.target.reset();
+        } catch (err) {
+            btn.innerHTML = '<i class="fas fa-exclamation-circle"></i> Failed — try again';
+            btn.style.background = 'linear-gradient(135deg, #c62828, #e53935)';
+        }
+
         setTimeout(() => {
-            btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
+            btn.innerHTML = originalHTML;
             btn.style.background = '';
             btn.style.boxShadow = '';
-            e.target.reset();
+            btn.disabled = false;
         }, 3500);
     }
+</script>
+
+<!-- ================= CAMPS MAP SCRIPT ================= -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+    (function initCampsMap() {
+        const mapEl = document.getElementById('campsMap');
+        if (!mapEl || typeof L === 'undefined') return;
+
+        const camps = [
+            { name: 'Bhelahi - 2',  area: 'Sarlahi District, Nepal',          coords: [26.9650, 85.5550] },
+            { name: 'Malangwa - 10',area: 'Malangwa Municipality, Sarlahi',   coords: [26.8650, 85.5630] },
+            { name: 'Brahmpuri',    area: 'Brahmpuri Gaupalika, Sarlahi',     coords: [26.9200, 85.4500] }
+        ];
+
+        const map = L.map('campsMap', {
+            center: [26.92, 85.52],
+            zoom: 11,
+            scrollWheelZoom: false
+        });
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 18,
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        const campIcon = L.divIcon({
+            className: 'camp-leaflet-pin',
+            html: '<div style="width:34px;height:34px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:linear-gradient(135deg,#B71C1C,#C8960C);box-shadow:0 4px 14px rgba(183,28,28,0.45);display:flex;align-items:center;justify-content:center;border:2px solid white;"><i class="fas fa-check" style="color:white;font-size:0.85rem;transform:rotate(45deg);"></i></div>',
+            iconSize: [34, 34],
+            iconAnchor: [17, 34],
+            popupAnchor: [0, -32]
+        });
+
+        const bounds = [];
+        camps.forEach(c => {
+            L.marker(c.coords, { icon: campIcon })
+                .addTo(map)
+                .bindPopup('<strong>' + c.name + '</strong><br><span style="color:#777;font-size:0.85rem">' + c.area + '</span><br><span style="color:#B71C1C;font-size:0.78rem;font-weight:600;"><i class="fas fa-calendar-check"></i> Camp previously organized here</span>');
+            bounds.push(c.coords);
+        });
+
+        if (bounds.length > 1) {
+            map.fitBounds(bounds, { padding: [40, 40] });
+        }
+
+        map.on('click', () => { map.scrollWheelZoom.enable(); });
+        map.on('mouseout', () => { map.scrollWheelZoom.disable(); });
+    })();
 </script>
 </body>
 </html>
