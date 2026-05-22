@@ -1361,6 +1361,13 @@
             .gal-grid-6 { grid-template-rows:210px 210px; }
         }
         @media (max-width:768px) {
+            .hero { min-height:auto; }
+            .hero-content { padding:96px 20px 64px; }
+            .hero-eyebrow { margin-bottom:18px; padding:7px 16px; font-size:0.7rem; letter-spacing:1.4px; }
+            .hero-logo { width:96px; height:96px; margin-bottom:18px; }
+            .hero-nepali { margin-bottom:16px; }
+            .hero-desc { margin-bottom:30px; line-height:1.7; }
+            .hero-scroll { display:none; }
             .nav-links { display:none; }
             .hamburger { display:flex; }
             .nav-name-full { display:none; }
@@ -1383,6 +1390,9 @@
         }
         @media (max-width:480px) {
             section { padding:70px 18px; }
+            .hero-content { padding:84px 18px 56px; }
+            .hero-logo { width:84px; height:84px; margin-bottom:14px; }
+            .hero-eyebrow { margin-bottom:14px; }
             .programs-grid { grid-template-columns:1fr; }
             .prog-card.featured { grid-column:auto; }
             .stats-inner { grid-template-columns:1fr 1fr; }
@@ -1578,13 +1588,13 @@
             <div class="spotlight-content">
                 <div class="spotlight-badges">
                     <span class="badge-chairperson">President</span>
-                    <span class="badge-usa-exp"><i class="fas fa-hospital"></i> U.S. Government Healthcare Expert</span>
+                    <span class="badge-usa-exp"><i class="fas fa-hospital"></i> Infectious Disease Expert - U.S.A. </span>
                 </div>
                 <h3 class="spotlight-name">Dr. Manoj Kumar Ray</h3>
                 <p class="spotlight-title-sub">Founder &amp; President — Shree Mithila Community Organization</p>
                 <p class="spotlight-title-sub" style="font-size:0.85rem; opacity:0.85; margin-top:-4px"><i class="fas fa-map-marker-alt"></i> Chakraghatta Gaupalika, Ward 2, Sarlahi</p>
                 <div class="spotlight-divider"></div>
-                <p class="spotlight-bio">A distinguished healthcare professional with extensive experience in U.S. Government healthcare systems, Dr. Manoj Kumar Ray brings world-class medical leadership and public health expertise back to his roots in Sarlahi. His vision drives SMCO's commitment to accessible, high-quality healthcare and sustainable community development across Chakraghatta Gaupalika.</p>
+                <p class="spotlight-bio">A distinguished healthcare professional with extensive experience in U.S. healthcare systems, Dr. Manoj Kumar Ray brings world-class medical leadership and public health expertise back to his roots in Sarlahi. His vision drives SMCO's commitment to accessible, high-quality healthcare and sustainable community development across Chakraghatta Gaupalika.</p>
                 <div class="spotlight-socials">
                     <a href="#" class="spotlight-social-btn" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
                     <a href="#" class="spotlight-social-btn" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
@@ -1797,10 +1807,10 @@
                 <div id="campsMap" aria-label="Map of SMCO camp locations in Sarlahi, Nepal"></div>
             </div>
             <div class="camps-side">
-                <a class="camp-card" href="https://www.google.com/maps/search/?api=1&query=Bhelahi+Sarlahi+Nepal" target="_blank" rel="noopener noreferrer">
+                <a class="camp-card" href="https://www.google.com/maps/search/?api=1&query=Belhi+Sarlahi+Nepal" target="_blank" rel="noopener noreferrer">
                     <div class="camp-card-pin"><i class="fas fa-check"></i></div>
                     <div class="camp-card-body">
-                        <div class="camp-card-title">Bhelahi - 2</div>
+                        <div class="camp-card-title">Belhi - 2</div>
                         <div class="camp-card-meta"><i class="fas fa-location-dot"></i> Sarlahi District, Nepal</div>
                         <div class="camp-card-meta" style="margin-top:4px"><i class="fas fa-calendar-check" style="color:var(--gold)"></i> Camp organized here</div>
                         <span class="camp-card-cta">View on Google Maps <i class="fas fa-arrow-up-right-from-square"></i></span>
@@ -2199,7 +2209,7 @@
         if (!mapEl || typeof L === 'undefined') return;
 
         const camps = [
-            { name: 'Bhelahi - 2',  area: 'Sarlahi District, Nepal',          coords: [26.9650, 85.5550] },
+            { name: 'Belhi - 2',  area: 'Sarlahi District, Nepal',          coords: [26.9650, 85.5550] },
             { name: 'Malangwa - 10',area: 'Malangwa Municipality, Sarlahi',   coords: [26.8650, 85.5630] },
             { name: 'Brahmpuri',    area: 'Brahmpuri Gaupalika, Sarlahi',     coords: [26.9200, 85.4500] }
         ];
