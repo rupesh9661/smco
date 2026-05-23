@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/0.9">
+  <url>
+    <loc>https://smco.org.np/</loc>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://smco.org.np/images/banner-2024-09-13.png</image:loc>
+      <image:title>SMCO community programs in Chakraghatta, Sarlahi, Nepal</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://smco.org.np/images/smco_colored_logo.png</image:loc>
+      <image:title>Shree Mithila Community Organization logo</image:title>
+    </image:image>
+  </url>
+</urlset>
