@@ -651,11 +651,17 @@
             transition:transform 0.5s cubic-bezier(0.4,0,0.2,1);
         }
         .gal-photo:hover img { transform:scale(1.07); }
+        /* Modifier: show the full image (no crop) — for wide/banner-style photos */
+        .gal-photo.gal-photo--contain {
+            background:#1a1a1a;
+        }
+        .gal-photo.gal-photo--contain img { object-fit:contain; }
         .gal-photo-overlay {
             position:absolute; inset:0;
             background:linear-gradient(to top,rgba(0,0,0,0.65) 0%,transparent 55%);
             opacity:0; transition:opacity 0.32s ease;
             display:flex; align-items:flex-end; padding:14px 16px;
+            pointer-events:none;
         }
         .gal-photo:hover .gal-photo-overlay { opacity:1; }
         .gal-photo-caption {
@@ -665,29 +671,77 @@
         }
         .gal-photo:hover .gal-photo-caption { transform:translateY(0); opacity:1; }
 
+        /* Zoom badge — visible cue that thumbnail opens a zoomable lightbox */
+        .gal-photo-zoom {
+            position:absolute; top:12px; right:12px;
+            width:36px; height:36px; border-radius:50%;
+            background:rgba(0,0,0,0.55);
+            backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+            border:1px solid rgba(255,255,255,0.25);
+            display:flex; align-items:center; justify-content:center;
+            color:white; font-size:0.9rem;
+            opacity:0; transform:scale(0.7);
+            transition:all 0.32s cubic-bezier(0.4,0,0.2,1);
+            pointer-events:none; z-index:2;
+            box-shadow:0 4px 14px rgba(0,0,0,0.4);
+        }
+        .gal-photo:hover .gal-photo-zoom {
+            opacity:1; transform:scale(1);
+            background:linear-gradient(135deg, var(--crimson), var(--saffron));
+            border-color:rgba(255,213,79,0.5);
+        }
+
         /* Lightbox */
         .lightbox {
             display:none; position:fixed; inset:0; z-index:2000;
             background:rgba(0,0,0,0.94); backdrop-filter:blur(8px);
             align-items:center; justify-content:center; padding:20px;
+            overflow:hidden;
         }
         .lightbox.open { display:flex; }
+        .lightbox-stage {
+            position:relative;
+            max-width:92vw; max-height:88vh;
+            overflow:hidden; border-radius:10px;
+            display:flex; align-items:center; justify-content:center;
+        }
         .lightbox-img {
-            max-width:90vw; max-height:88vh;
+            max-width:92vw; max-height:88vh;
             border-radius:10px; box-shadow:0 30px 80px rgba(0,0,0,0.8);
             object-fit:contain;
+            cursor:zoom-in;
+            transition:transform 0.3s ease;
+            transform-origin:center center;
+            user-select:none; -webkit-user-drag:none;
         }
+        .lightbox.zoomed { overflow:auto; }
+        .lightbox.zoomed .lightbox-img {
+            cursor:grab; transform:scale(2);
+        }
+        .lightbox.zoomed.dragging .lightbox-img { cursor:grabbing; transition:none; }
         .lightbox-close {
             position:absolute; top:20px; right:24px;
             background:none; border:none;
             color:rgba(255,255,255,0.7); font-size:2.2rem;
             cursor:pointer; line-height:1; transition:var(--transition);
+            z-index:5;
         }
         .lightbox-close:hover { color:white; transform:scale(1.15); }
+        .lightbox-zoom-hint {
+            position:absolute; top:24px; left:24px;
+            color:rgba(255,255,255,0.5); font-size:0.78rem;
+            font-family:'Poppins',sans-serif; letter-spacing:0.5px;
+            display:flex; align-items:center; gap:7px;
+            background:rgba(255,255,255,0.06); padding:7px 14px; border-radius:30px;
+            border:1px solid rgba(255,255,255,0.10); pointer-events:none;
+            z-index:5;
+        }
+        .lightbox-zoom-hint i { color:var(--gold-light); font-size:0.8rem; }
         .lightbox-caption {
             position:absolute; bottom:24px; left:50%; transform:translateX(-50%);
             color:rgba(255,255,255,0.6); font-size:0.87rem;
             white-space:nowrap; font-family:'Poppins',sans-serif;
+            z-index:5;
         }
 
         /* ====================================================
@@ -1656,15 +1710,14 @@
                     <span class="badge-chairperson">President</span>
                     <span class="badge-usa-exp"><i class="fas fa-hospital"></i> Infectious Disease Expert - U.S.A. </span>
                 </div>
-                <h3 class="spotlight-name">Dr. Manoj Kumar Ray</h3>
+                <h3 class="spotlight-name">Dr. Manoj Kumar Ray, MD, FACP, CTropMed®, FIDSA</h3>
                 <p class="spotlight-title-sub">Founder &amp; President — Shree Mithila Community Organization</p>
                 <p class="spotlight-title-sub" style="font-size:0.85rem; opacity:0.85; margin-top:-4px"><i class="fas fa-map-marker-alt"></i> Chakraghatta Gaupalika, Ward 2, Sarlahi</p>
                 <div class="spotlight-divider"></div>
-                <p class="spotlight-bio">A distinguished healthcare professional with extensive experience in U.S. healthcare systems, Dr. Manoj Kumar Ray brings world-class medical leadership and public health expertise back to his roots in Sarlahi. His vision drives SMCO's commitment to accessible, high-quality healthcare and sustainable community development across Chakraghatta Gaupalika.</p>
+                <p class="spotlight-bio">Former Chief of AIDS Medicine / Medical Doctor at Santa Clara Valley Medical Center, and former Site Director of the SCVMC Infectious Diseases Fellowship program at Stanford University. A distinguished healthcare professional with extensive experience in U.S. healthcare systems, Dr. Manoj Kumar Ray brings world-class medical leadership and public health expertise back to his roots in Sarlahi — driving SMCO's commitment to accessible, high-quality healthcare and sustainable community development across Chakraghatta Gaupalika.</p>
                 <div class="spotlight-socials">
-                    <a href="#" class="spotlight-social-btn" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="spotlight-social-btn" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="#" class="spotlight-social-btn" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                    <a href="https://www.linkedin.com/in/manoj-kumar-ray-md-facp-ctropmed%C2%AE-fidsa-75697723b/" target="_blank" rel="noopener noreferrer" class="spotlight-social-btn" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="mailto:raymanoj24@gmail.com" class="spotlight-social-btn" aria-label="Email"><i class="fas fa-envelope"></i></a>
                 </div>
             </div>
         </div>
@@ -1787,7 +1840,40 @@
             Real snapshots of SMCO's work — free health camps, community outreach, and programs in action across Sarlahi.
         </p>
 
-        <!-- ── Event 1 · 13 Sep 2024 ── -->
+        <!-- ── Event · 11 Apr 2022 ── -->
+        <div class="gal-event reveal">
+            <div class="gal-event-header">
+                <div class="gal-date-badge">
+                    <i class="fas fa-calendar-alt"></i> 11 April 2022
+                </div>
+                <span class="gal-event-name">SMCO Founding Day — Chakraghatta, Sarlahi</span>
+                <span class="gal-event-count">5 photos</span>
+            </div>
+            <div class="gal-grid gal-grid-5">
+                <div class="gal-photo gal-photo--contain">
+                    <img src="images/PHOTO_11_APR.jpeg" alt="Free Eye & Health Screening Banner — Founding Day" onclick="openLightbox(this)">
+                    <div class="gal-photo-overlay"><span class="gal-photo-caption">Free Eye &amp; Health Screening — Founding Day Banner</span></div>
+                </div>
+                <div class="gal-photo">
+                    <img src="images/photo_11_apr-2.jpeg" alt="Inaugural Community Meeting" onclick="openLightbox(this)">
+                    <div class="gal-photo-overlay"><span class="gal-photo-caption">Inaugural Community Meeting</span></div>
+                </div>
+                <div class="gal-photo">
+                    <img src="images/photo_11_apr_3.jpeg" alt="Founding Members" onclick="openLightbox(this)">
+                    <div class="gal-photo-overlay"><span class="gal-photo-caption">Founding Members</span></div>
+                </div>
+                <div class="gal-photo">
+                    <img src="images/photo_11_apr_4.jpeg" alt="Community Engagement" onclick="openLightbox(this)">
+                    <div class="gal-photo-overlay"><span class="gal-photo-caption">Community Engagement</span></div>
+                </div>
+                <div class="gal-photo">
+                    <img src="images/photo_11apr-5.jpeg" alt="Vision Sharing Session" onclick="openLightbox(this)">
+                    <div class="gal-photo-overlay"><span class="gal-photo-caption">Vision Sharing Session</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── Event · 13 Sep 2024 ── -->
         <div class="gal-event reveal">
             <div class="gal-event-header">
                 <div class="gal-date-badge">
@@ -1907,8 +1993,9 @@
 
 <!-- ================= LIGHTBOX ================= -->
 <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
-    <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
-    <img class="lightbox-img" id="lightboxImg" src="" alt="">
+    <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close">&times;</button>
+    <div class="lightbox-zoom-hint" id="lightboxHint"><i class="fas fa-magnifying-glass-plus"></i> <span>Click image to zoom</span></div>
+    <img class="lightbox-img" id="lightboxImg" src="" alt="" onclick="toggleLightboxZoom(event)">
     <div class="lightbox-caption" id="lightboxCaption"></div>
 </div>
 
@@ -2205,21 +2292,79 @@
     }, { threshold: 0.5 });
     document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
 
-    /* --- Lightbox --- */
+    /* --- Lightbox with click-to-zoom + drag-to-pan --- */
+    /* Inject a zoom badge into every gallery thumbnail so the zoom affordance is visible */
+    document.querySelectorAll('.gal-photo').forEach(cell => {
+        if (cell.querySelector('.gal-photo-zoom')) return;
+        const badge = document.createElement('div');
+        badge.className = 'gal-photo-zoom';
+        badge.innerHTML = '<i class="fas fa-magnifying-glass-plus"></i>';
+        cell.appendChild(badge);
+    });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
     function openLightbox(img) {
-        document.getElementById('lightboxImg').src = img.src;
-        document.getElementById('lightboxImg').alt = img.alt;
+        const lb = document.getElementById('lightbox');
+        const lbImg = document.getElementById('lightboxImg');
+        lbImg.src = img.src;
+        lbImg.alt = img.alt;
         document.getElementById('lightboxCaption').textContent = img.alt;
-        document.getElementById('lightbox').classList.add('open');
+        lb.classList.add('open');
+        lb.classList.remove('zoomed', 'dragging');
+        lbImg.style.transform = '';
         document.body.style.overflow = 'hidden';
     }
     function closeLightbox(e) {
-        if (!e || e.target !== document.getElementById('lightboxImg')) {
-            document.getElementById('lightbox').classList.remove('open');
+        const lbImg = document.getElementById('lightboxImg');
+        if (!e || (e.target !== lbImg && !e.target.closest('.lightbox-img'))) {
+            const lb = document.getElementById('lightbox');
+            lb.classList.remove('open', 'zoomed', 'dragging');
+            lbImg.style.transform = '';
             document.body.style.overflow = '';
         }
     }
+    function toggleLightboxZoom(e) {
+        e.stopPropagation();
+        const lb = document.getElementById('lightbox');
+        const lbImg = document.getElementById('lightboxImg');
+        const hint = document.getElementById('lightboxHint');
+        if (lb.classList.contains('zoomed')) {
+            lb.classList.remove('zoomed');
+            lbImg.style.transform = '';
+            hint.querySelector('span').textContent = 'Click image to zoom';
+            hint.querySelector('i').className = 'fas fa-magnifying-glass-plus';
+        } else {
+            const rect = lbImg.getBoundingClientRect();
+            const ox = ((e.clientX - rect.left) / rect.width) * 100;
+            const oy = ((e.clientY - rect.top) / rect.height) * 100;
+            lbImg.style.transformOrigin = ox + '% ' + oy + '%';
+            lb.classList.add('zoomed');
+            hint.querySelector('span').textContent = 'Click again to zoom out · drag to pan';
+            hint.querySelector('i').className = 'fas fa-magnifying-glass-minus';
+        }
+    }
+    (function enableLightboxPan() {
+        const lb = document.getElementById('lightbox');
+        let startX = 0, startY = 0, startScroll = { x: 0, y: 0 }, dragging = false;
+        lb.addEventListener('mousedown', e => {
+            if (!lb.classList.contains('zoomed')) return;
+            if (e.target.id !== 'lightboxImg') return;
+            dragging = true;
+            lb.classList.add('dragging');
+            startX = e.clientX; startY = e.clientY;
+            startScroll = { x: lb.scrollLeft, y: lb.scrollTop };
+            e.preventDefault();
+        });
+        window.addEventListener('mousemove', e => {
+            if (!dragging) return;
+            lb.scrollLeft = startScroll.x - (e.clientX - startX);
+            lb.scrollTop  = startScroll.y - (e.clientY - startY);
+        });
+        window.addEventListener('mouseup', () => {
+            if (!dragging) return;
+            dragging = false;
+            lb.classList.remove('dragging');
+        });
+    })();
 
     /* --- Contact form --- */
     /* ---- Google Sheets integration ----
