@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Seminar Certificate Request | SMCO</title>
+    <meta name="description" content="Request your AI Seminar participation certificate from Shree Mithila Community Organization. Submit your details and feedback to receive your certificate within 24 hours.">
+    <link rel="icon" type="image/png" href="images/smco_colored_logo.png">
+    <link rel="apple-touch-icon" href="images/smco_colored_logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --crimson:       #B71C1C;
+            --crimson-dark:  #7F0000;
+            --crimson-light: #E53935;
+            --gold:          #C8960C;
+            --gold-light:    #FFD54F;
+            --white:         #FFFFFF;
+            --off-white:     #FFF9F5;
+            --gray:          #78716C;
+            --text:          #2D2416;
+            --shadow-soft:   0 4px 24px rgba(0,0,0,0.08);
+            --radius:        14px;
+            --radius-lg:     24px;
+            --transition:    all 0.32s cubic-bezier(0.4,0,0.2,1);
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior:smooth; }
+        body { font-family:'Poppins',sans-serif; color:var(--text); background:var(--white); }
+        a { color:inherit; text-decoration:none; }
+        button { font:inherit; }
+        .navbar { position:fixed; top:0; left:0; right:0; z-index:1000; background:rgba(255,255,255,0.98); border-bottom:3px solid var(--gold); backdrop-filter:blur(14px); }
+        .nav-inner { max-width:1200px; margin:0 auto; padding:14px 24px; display:flex; align-items:center; justify-content:space-between; gap:18px; }
+        .nav-brand { display:flex; align-items:center; gap:12px; }
+        .nav-logo { width:56px; height:56px; object-fit:contain; }
+        .nav-links { display:flex; align-items:center; gap:10px; list-style:none; }
+        .nav-links a { font-size:0.9rem; font-weight:600; color:var(--text); padding:10px 14px; border-radius:10px; transition:var(--transition); }
+        .nav-links a:hover { background:rgba(183,28,28,0.08); color:var(--crimson); }
+        .nav-cta { background:linear-gradient(135deg, var(--crimson), var(--crimson-light)); color:white; padding:10px 22px; border-radius:30px; }
+        .hero { padding:120px 24px 70px; min-height:420px; display:grid; place-items:center; background:linear-gradient(180deg, rgba(183,28,28,0.08), rgba(255,255,255,0.96)); }
+        .page-title { max-width:900px; text-align:center; }
+        .page-title small { display:inline-block; margin-bottom:18px; color:var(--gold); letter-spacing:1.6px; text-transform:uppercase; font-weight:700; }
+        .page-title h1 { font-family:'Playfair Display',serif; font-size:clamp(2.2rem,4vw,3.8rem); line-height:1.05; margin-bottom:18px; }
+        .page-title p { max-width:720px; margin:0 auto; color:var(--gray); line-height:1.8; font-size:1rem; }
+        .page-body { max-width:1024px; margin:0 auto; padding:0 24px 64px; }
+        .card { background:white; border-radius:var(--radius-lg); box-shadow:var(--shadow-soft); overflow:hidden; border:1px solid rgba(183,28,28,0.08); }
+        .card-grid { display:grid; grid-template-columns:1fr 1fr; gap:0; }
+        .card-panel { padding:42px 40px; }
+        .card-panel h2 { font-family:'Playfair Display',serif; font-size:2rem; margin-bottom:14px; }
+        .card-panel p { color:var(--gray); line-height:1.8; margin-bottom:28px; }
+        .form-group { margin-bottom:20px; }
+        .form-group label { display:block; margin-bottom:8px; font-size:0.9rem; font-weight:600; color:var(--text); }
+        .form-group input, .form-group textarea { width:100%; padding:14px 16px; border-radius:16px; border:2px solid #E8E2DC; background:var(--off-white); color:var(--text); font-size:0.95rem; transition:var(--transition); }
+        .form-group input:focus, .form-group textarea:focus { outline:none; border-color:var(--crimson); background:white; box-shadow:0 0 0 3px rgba(183,28,28,0.08); }
+        .form-group textarea { min-height:154px; resize:vertical; }
+        .form-row { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; }
+        .rating-group { display:grid; gap:8px; }
+        .rating-stars { display:flex; gap:10px; align-items:center; }
+        .rating-stars button { width:48px; height:48px; border-radius:14px; border:1px solid #E8E2DC; background:var(--off-white); color:#C4C1BD; font-size:1.35rem; cursor:pointer; transition:var(--transition); }
+        .rating-stars button.active, .rating-stars button:hover { background:linear-gradient(135deg, var(--gold), var(--gold-light)); color:var(--dark); border-color:transparent; }
+        .form-status { min-height:22px; margin-bottom:18px; font-size:0.95rem; color:var(--crimson); }
+        .form-status.success { color:#2E7D32; }
+        .btn-submit { width:100%; display:inline-flex; align-items:center; justify-content:center; gap:10px; padding:16px 22px; border:none; border-radius:999px; background:linear-gradient(135deg, var(--crimson), var(--crimson-light)); color:white; font-weight:700; cursor:pointer; transition:var(--transition); box-shadow:0 18px 34px rgba(183,28,28,0.18); }
+        .btn-submit:hover { transform:translateY(-2px); box-shadow:0 20px 40px rgba(183,28,28,0.24); }
+        .panel-note { margin-top:18px; font-size:0.95rem; color:var(--gray); }
+        .panel-note strong { color:var(--dark); }
+        .footer { padding:28px 24px; text-align:center; font-size:0.9rem; color:var(--gray); }
+        .footer a { color:var(--crimson); }
+        @media (max-width:840px) {
+            .card-grid { grid-template-columns:1fr; }
+            .form-row { grid-template-columns:1fr; }
+            .nav-inner { flex-wrap:wrap; gap:14px; }
+            .nav-links { flex-wrap:wrap; justify-content:center; }
+            .hero { padding:140px 18px 60px; }
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar" aria-label="Primary navigation">
+    <div class="nav-inner">
+        <a href="index.html" class="nav-brand">
+            <img src="images/smco_colored_logo.png" alt="SMCO Logo" class="nav-logo">
+            <div>
+                <strong style="display:block; font-size:0.92rem; color:var(--crimson);">Shree Mithila Community Organization</strong>
+                <small style="font-size:0.75rem; color:var(--gray);">Chakraghatta, Sarlahi, Nepal</small>
+            </div>
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html#about">About</a></li>
+            <li><a href="index.html#programs">Programs</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+            <li><a href="ai-seminar-certificate.html" class="nav-cta">AI Certificate</a></li>
+        </ul>
+    </div>
+</nav>
+<section class="hero" aria-labelledby="pageTitle">
+    <div class="page-title">
+        <small>AI Seminar Certificate Request</small>
+        <h1 id="pageTitle">Request Your Participation Certificate</h1>
+        <p>Submit your details, rating, and feedback below. Once saved, we will email your certificate within 24 hours.</p>
+    </div>
+</section>
+<main class="page-body">
+    <div class="card">
+        <div class="card-grid">
+            <div class="card-panel" style="background:linear-gradient(180deg, rgba(183,28,28,0.08), rgba(255,255,255,0.94));">
+                <h2>AI Seminar Certificate</h2>
+                <p>Thank you for attending the AI seminar. Please fill in your personal details and suggestions. We use secure submission so your request is recorded and the certificate can be delivered to your email.</p>
+                <p class="panel-note"><strong>Note:</strong> After submitting, you will see a confirmation message. Your certificate will be emailed within 24 hours.</p>
+            </div>
+            <div class="card-panel">
+                <form id="certificateForm" onsubmit="handleCertificateSubmit(event)" novalidate>
+                    <div class="form-status" id="formStatus"></div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text" id="firstName" placeholder="First name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" id="lastName" placeholder="Last name" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="dob">Date of Birth</label>
+                            <input type="date" id="dob" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="mobile">Mobile Number</label>
+                            <input type="tel" id="mobile" placeholder="+977 98XXXXXXXX" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email ID</label>
+                        <input type="email" id="email" placeholder="your@email.com" required>
+                    </div>
+                    <div class="form-group rating-group">
+                        <label>Rating</label>
+                        <div class="rating-stars" role="radiogroup" aria-labelledby="ratingLabel">
+                            <button type="button" class="star" data-value="1" aria-label="1 star">★</button>
+                            <button type="button" class="star" data-value="2" aria-label="2 stars">★</button>
+                            <button type="button" class="star" data-value="3" aria-label="3 stars">★</button>
+                            <button type="button" class="star" data-value="4" aria-label="4 stars">★</button>
+                            <button type="button" class="star active" data-value="5" aria-label="5 stars">★</button>
+                        </div>
+                        <input type="hidden" id="rating" value="5">
+                    </div>
+                    <div class="form-group">
+                        <label for="feedback">Feedback / Suggestions</label>
+                        <textarea id="feedback" placeholder="Tell us what you liked or how we can improve..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit" id="certificateSubmit">
+                        <i class="fas fa-paper-plane"></i> Submit Request
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+<footer class="footer">
+    <p>&copy; 2026 Shree Mithila Community Organization (SMCO). All rights reserved.</p>
+    <p>Return to <a href="index.html">SMCO home</a>.</p>
+</footer>
+<script>
+    const GOOGLE_SCRIPT_URL_CERTIFICATE = 'https://script.google.com/macros/s/AKfycbzNmFBX3pIpoaC0JEXVeQNnvjWNbu09EokuWZfwFoH4YfQbehEAea0jIDuE7jJhMLzgtQ/exec';
+    const stars = document.querySelectorAll('.rating-stars .star');
+    const ratingInput = document.getElementById('rating');
+    const statusEl = document.getElementById('formStatus');
+
+    function setRating(value) {
+        const ratingValue = Number(value);
+        ratingInput.value = ratingValue;
+        stars.forEach(button => {
+            button.classList.toggle('active', Number(button.dataset.value) <= ratingValue);
+        });
+    }
+
+    stars.forEach(button => {
+        button.addEventListener('click', () => setRating(button.dataset.value));
+    });
+
+    function setStatus(message, isSuccess = false) {
+        statusEl.textContent = message;
+        statusEl.className = isSuccess ? 'form-status success' : 'form-status';
+    }
+
+    async function handleCertificateSubmit(event) {
+        event.preventDefault();
+        const form = event.target;
+        const submitBtn = document.getElementById('certificateSubmit');
+        const values = {
+            timestamp: new Date().toLocaleString('en-US', { timeZone: 'Asia/Kathmandu' }),
+            formName: 'AI Seminar Certificate Request',
+            firstName: document.getElementById('firstName').value.trim(),
+            lastName: document.getElementById('lastName').value.trim(),
+            dob: document.getElementById('dob').value,
+            mobile: document.getElementById('mobile').value.trim(),
+            email: document.getElementById('email').value.trim(),
+            rating: document.getElementById('rating').value,
+            feedback: document.getElementById('feedback').value.trim(),
+        };
+
+        if (!values.firstName || !values.lastName || !values.dob || !values.mobile || !values.email) {
+            setStatus('Please complete all required fields before submitting.');
+            return;
+        }
+
+        submitBtn.disabled = true;
+        const originalHTML = submitBtn.innerHTML;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending…';
+
+        const params = new URLSearchParams(values);
+
+        try {
+            await fetch(GOOGLE_SCRIPT_URL_CERTIFICATE, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: params.toString(),
+            });
+
+            setStatus('Success! Your certificate request has been received. Your certificate will be mailed within 24 hours.', true);
+            form.reset();
+            setRating(5);
+        } catch (error) {
+            setStatus('Submission failed. Please try again later or contact us directly.');
+        } finally {
+            submitBtn.innerHTML = originalHTML;
+            submitBtn.disabled = false;
+        }
+    }
+</script>
+</body>
+</html>
