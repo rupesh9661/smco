@@ -932,6 +932,58 @@
             box-shadow:0 10px 28px rgba(0,0,0,0.18);
         }
 
+        /* --- Facebook Posts Grid --- */
+        .social-feed-section {
+            background:var(--off-white);
+            padding:96px 24px;
+        }
+        .fb-posts-grid {
+            display:grid;
+            grid-template-columns:repeat(auto-fit, minmax(320px, 500px));
+            gap:24px;
+            justify-content:center;
+            margin-top:32px;
+        }
+        .fb-post-wrapper {
+            background:white;
+            border-radius:16px;
+            overflow:hidden;
+            box-shadow:0 8px 32px rgba(0,0,0,0.08);
+            transition:var(--transition);
+            border:1px solid rgba(0,0,0,0.06);
+        }
+        .fb-post-wrapper:hover {
+            transform:translateY(-6px);
+            box-shadow:0 12px 40px rgba(0,0,0,0.15);
+        }
+        .fb-post-wrapper iframe {
+            width:100% !important;
+            display:block;
+            border-radius:16px;
+        }
+        .btn-social-follow {
+            display:inline-flex;
+            align-items:center;
+            gap:10px;
+            background:#1877F2;
+            color:white;
+            padding:14px 32px;
+            border-radius:40px;
+            text-decoration:none;
+            font-weight:700;
+            font-size:1rem;
+            transition:var(--transition);
+            box-shadow:0 6px 24px rgba(24,119,242,0.3);
+        }
+        .btn-social-follow:hover {
+            transform:translateY(-3px);
+            box-shadow:0 10px 32px rgba(24,119,242,0.45);
+            background:#1664D8;
+        }
+        .btn-social-follow i {
+            font-size:1.1rem;
+        }
+
         /* ====================================================
            CAMP LOCATIONS MAP
         ==================================================== */
@@ -1662,6 +1714,15 @@
             .form-duo { grid-template-columns:1fr; }
             .about-img-accent { bottom:10px; right:10px; }
             
+            /* Facebook Posts Mobile */
+            .fb-posts-grid {
+                grid-template-columns:1fr;
+                gap:20px;
+            }
+            .fb-post-wrapper iframe {
+                max-width:100%;
+            }
+            
             /* Job Top Banner Mobile */
             .job-vacancy-top-banner { 
                 top:70px;
@@ -2085,6 +2146,31 @@
     </div>
 </section>
 
+<!-- ================= FACEBOOK POSTS / SOCIAL FEED ================= -->
+<section class="social-feed-section" id="social-feed">
+    <div class="container">
+        <div style="text-align:center">
+            <div class="tag tag-gold">Stay Connected</div>
+            <h2 class="section-heading">Latest from <em style="color:var(--crimson)">Facebook</em></h2>
+            <div class="divider-line center"></div>
+            <p class="lead-text" style="margin:0 auto 40px">Follow our journey and stay updated with our latest activities, announcements, and community initiatives.</p>
+        </div>
+        <div class="fb-posts-grid reveal">
+            <div class="fb-post-wrapper">
+                <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fpermalink.php%3Fstory_fbid%3Dpfbid0z6dop1HPCYY7K7xKRy1QTiMLHivFCWJ612kGTThhYudymURQTeMKNrcS3dawYkphl%26id%3D61589824006716&show_text=true&width=500" width="500" height="735" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+            </div>
+            <div class="fb-post-wrapper">
+                <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fpermalink.php%3Fstory_fbid%3Dpfbid0QHmVZ71xKorYSQpnc1k2eHooHfaHsE85JP7AfMeqnWgjLdyXHUtU2tXAaV5c46qul%26id%3D61589824006716&show_text=true&width=500" width="500" height="650" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+            </div>
+        </div>
+        <div style="text-align:center; margin-top:40px" class="reveal">
+            <a href="https://www.facebook.com/profile.php?id=61589824006716" target="_blank" rel="noopener noreferrer" class="btn-social-follow">
+                <i class="fab fa-facebook-f"></i> Follow Us on Facebook
+            </a>
+        </div>
+    </div>
+</section>
+
 <!-- ================= GALLERY ================= -->
 <section class="gallery-section" id="gallery">
     <div class="container">
@@ -2286,7 +2372,7 @@
                     <div class="cinfo-icon"><i class="fas fa-envelope"></i></div>
                     <div class="cinfo-text">
                         <h4>Email Us</h4>
-                        <p><a href="mailto:mithilacommunityorganization@gmail.com" style="color:var(--crimson);text-decoration:none;font-weight:500;word-break:break-all">mithilacommunityorganization@gmail.com</a></p>
+                        <p><a href="mailto:info@smco.org.np" style="color:var(--crimson);text-decoration:none;font-weight:500;word-break:break-all">info@smco.org.np</a></p>
                     </div>
                 </div>
                 <div class="cinfo-item">
