@@ -126,6 +126,7 @@
             -webkit-backdrop-filter:blur(16px);
             border-bottom:3px solid var(--gold);
             transition:var(--transition);
+            margin-bottom:0;
         }
         .navbar.scrolled { box-shadow:0 2px 40px rgba(0,0,0,0.13); }
 
@@ -373,6 +374,136 @@
         .stat-card .label {
             font-size:0.78rem; color:rgba(255,255,255,0.68);
             text-transform:uppercase; letter-spacing:1.2px; margin-top:7px;
+        }
+
+        /* ====================================================
+           JOB VACANCY TOP BANNER
+        ==================================================== */
+        .job-vacancy-top-banner {
+            position:fixed;
+            top:80px;
+            left:0;
+            right:0;
+            z-index:999;
+            background:linear-gradient(135deg, var(--crimson-dark) 0%, var(--crimson) 50%, #C62828 100%);
+            box-shadow:0 4px 20px rgba(183,28,28,0.4);
+            animation:slideDown 0.5s ease-out;
+            transition:all 0.3s ease;
+            border-top:2px solid var(--gold);
+        }
+        .job-top-banner-inner {
+            max-width:1240px;
+            margin:0 auto;
+            padding:14px 24px;
+            display:flex;
+            align-items:center;
+            gap:16px;
+            position:relative;
+        }
+        .job-top-icon {
+            width:42px;
+            height:42px;
+            background:linear-gradient(135deg, var(--gold), var(--gold-light));
+            border-radius:10px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            flex-shrink:0;
+            box-shadow:0 4px 12px rgba(200,150,12,0.4);
+            animation:pulse 2s ease-in-out infinite;
+        }
+        .job-top-icon i {
+            font-size:1.2rem;
+            color:var(--dark);
+        }
+        .job-top-content {
+            flex:1;
+            display:flex;
+            flex-direction:column;
+            gap:4px;
+        }
+        .job-top-tag {
+            display:inline-flex;
+            align-items:center;
+            gap:5px;
+            color:var(--gold-light);
+            font-size:0.65rem;
+            font-weight:700;
+            text-transform:uppercase;
+            letter-spacing:1.5px;
+        }
+        .job-top-tag i {
+            animation:sparkle 1.5s ease-in-out infinite;
+        }
+        .job-top-text {
+            color:white;
+            font-size:0.95rem;
+            font-weight:500;
+            line-height:1.4;
+        }
+        .job-top-text strong {
+            color:var(--gold-light);
+            font-weight:700;
+        }
+        .job-top-btn {
+            display:inline-flex;
+            align-items:center;
+            gap:8px;
+            background:white;
+            color:var(--crimson);
+            padding:10px 24px;
+            border-radius:30px;
+            text-decoration:none;
+            font-weight:700;
+            font-size:0.9rem;
+            transition:var(--transition);
+            box-shadow:0 4px 12px rgba(255,255,255,0.25);
+            flex-shrink:0;
+        }
+        .job-top-btn:hover {
+            transform:translateY(-2px) scale(1.05);
+            box-shadow:0 6px 20px rgba(255,255,255,0.4);
+            background:linear-gradient(135deg, var(--gold-light), var(--gold));
+            color:var(--dark);
+        }
+        .job-top-btn i {
+            transition:transform 0.3s ease;
+        }
+        .job-top-btn:hover i {
+            transform:translateX(3px);
+        }
+        .job-top-close {
+            width:32px;
+            height:32px;
+            background:rgba(255,255,255,0.1);
+            border:1px solid rgba(255,255,255,0.2);
+            border-radius:50%;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            color:rgba(255,255,255,0.7);
+            cursor:pointer;
+            transition:var(--transition);
+            flex-shrink:0;
+        }
+        .job-top-close:hover {
+            background:rgba(255,255,255,0.2);
+            color:white;
+            transform:rotate(90deg);
+        }
+        .job-top-close i {
+            font-size:0.9rem;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform:translateY(-100%);
+                opacity:0;
+            }
+            to {
+                transform:translateY(0);
+                opacity:1;
+            }
         }
 
         /* ====================================================
@@ -1480,6 +1611,29 @@
             .gal-grid-5 { grid-template-rows:240px 180px; }
             .gal-grid-6 { grid-template-rows:210px 210px; }
         }
+        
+        /* Tablet view - optimize job banner */
+        @media (max-width:992px) {
+            .job-top-banner-inner {
+                padding:10px 20px;
+                gap:14px;
+            }
+            .job-top-icon {
+                width:40px;
+                height:40px;
+            }
+            .job-top-icon i {
+                font-size:1.15rem;
+            }
+            .job-top-text {
+                font-size:0.88rem;
+            }
+            .job-top-btn {
+                padding:9px 20px;
+                font-size:0.86rem;
+            }
+        }
+        
         @media (max-width:768px) {
             .hero { min-height:auto; }
             .hero-content { padding:96px 20px 64px; }
@@ -1507,6 +1661,50 @@
             .footer-bar { flex-direction:column; text-align:center; }
             .form-duo { grid-template-columns:1fr; }
             .about-img-accent { bottom:10px; right:10px; }
+            
+            /* Job Top Banner Mobile */
+            .job-vacancy-top-banner { 
+                top:70px;
+                border-top:2px solid var(--gold);
+            }
+            .job-top-banner-inner { 
+                padding:14px 16px; 
+                gap:10px;
+                flex-wrap:wrap;
+            }
+            .job-top-icon { 
+                width:40px; 
+                height:40px; 
+                order:1;
+            }
+            .job-top-icon i { font-size:1.1rem; }
+            .job-top-content { 
+                flex:1 1 auto;
+                min-width:140px;
+                order:2;
+            }
+            .job-top-tag { 
+                font-size:0.55rem; 
+                margin-bottom:2px;
+            }
+            .job-top-text { 
+                font-size:0.8rem;
+                line-height:1.3;
+            }
+            .job-top-btn { 
+                padding:8px 16px; 
+                font-size:0.8rem;
+                order:4;
+                flex:1 1 auto;
+                justify-content:center;
+                width:100%;
+                flex-basis:100%;
+            }
+            .job-top-close { 
+                width:30px; 
+                height:30px;
+                order:3;
+            }
         }
         @media (max-width:480px) {
             section { padding:70px 18px; }
@@ -1522,6 +1720,40 @@
             .gal-grid-6 { grid-template-columns:1fr 1fr; grid-template-rows:repeat(3,150px); }
             .gal-grid-5 .gal-photo:first-child { grid-column:1/3; }
             .contact-form-card { padding:28px 20px; }
+            
+            /* Job Top Banner Extra Small Mobile */
+            .job-top-banner-inner {
+                padding:12px 12px;
+            }
+            .job-top-icon { 
+                width:36px; 
+                height:36px; 
+            }
+            .job-top-icon i { font-size:1rem; }
+            .job-top-tag { 
+                font-size:0.52rem;
+                letter-spacing:1px;
+            }
+            .job-top-text { 
+                font-size:0.75rem;
+            }
+            .job-top-text strong {
+                display:block;
+                margin-top:2px;
+            }
+            .job-top-btn { 
+                padding:7px 14px; 
+                font-size:0.75rem;
+                margin-top:4px;
+            }
+            .job-top-close { 
+                width:28px; 
+                height:28px;
+            }
+            .job-top-close i {
+                font-size:0.8rem;
+            }
+        }
         }
     </style>
 </head>
@@ -1553,6 +1785,25 @@
         </div>
     </div>
 </nav>
+
+<!-- ================= JOB VACANCY TOP BANNER ================= -->
+<div class="job-vacancy-top-banner" id="jobBanner">
+    <div class="job-top-banner-inner">
+        <div class="job-top-icon">
+            <i class="fas fa-briefcase"></i>
+        </div>
+        <div class="job-top-content">
+            <span class="job-top-tag"><i class="fas fa-star"></i> नयाँ अवसर / NEW OPPORTUNITY</span>
+            <span class="job-top-text">We're Hiring! <strong>गणक आवश्यकता</strong> - Join our Health Survey Team</span>
+        </div>
+        <a href="job-vacancy.html" class="job-top-btn">
+            Apply Now <i class="fas fa-arrow-right"></i>
+        </a>
+        <button class="job-top-close" onclick="closeJobBanner()" aria-label="Close banner">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+</div>
 
 <!-- ================= MOBILE MENU ================= -->
 <div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true">
@@ -2120,6 +2371,7 @@
                 <li><a href="#team">Leadership Team</a></li>
                 <li><a href="#gallery">Gallery</a></li>
                 <li><a href="#contact">Contact</a></li>
+                <li><a href="job-vacancy.html">Careers</a></li>
             </ul>
         </div>
         <div class="footer-col">
@@ -2258,6 +2510,18 @@
     function closeMobileMenu() {
         mobileMenu.classList.remove('open');
         document.body.style.overflow = '';
+    }
+
+    /* --- Close Job Banner --- */
+    function closeJobBanner() {
+        const banner = document.getElementById('jobBanner');
+        if (banner) {
+            banner.style.transform = 'translateY(-100%)';
+            banner.style.opacity = '0';
+            setTimeout(() => {
+                banner.style.display = 'none';
+            }, 300);
+        }
     }
 
     /* --- Scroll reveal --- */
